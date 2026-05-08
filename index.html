@@ -1,0 +1,3344 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>UniverseOS – Rede Social Web3 & Corretora Cripto</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+       
+    <!-- SEGURANÇA -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+                   script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.youtube.com;
+                   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+                   font-src https://fonts.gstatic.com;
+                   img-src * data: blob:;
+                   media-src * blob:;
+                   connect-src 'self' https://api.coingecko.com https://newsdata.io https://newsapi.org https://generativelanguage.googleapis.com https://serpapi.com;
+                   frame-src https://www.youtube.com https://www.google.com;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=63072000;includeSubDomains;preload">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(self),microphone=(self),geolocation=()">
+    <meta http-equiv="X-XSS-Protection" content="1;mode=block">
+
+    <!-- SEO -->
+    <meta name="description" content="UniverseOS – A rede social Web3 definitiva com corretora de criptomoedas, vídeos curtos, notícias globais, IA de investimentos e muito mais.">
+    <meta name="keywords" content="UniverseOS,Web3,blockchain,rede social,corretora,cripto,Bitcoin,Ethereum,DeFi,NFT,DAO,MetaMask,Coinbase,TikTok,Reddit,LinkedIn,IA,investimento,notícias">
+    <meta name="author" content="UniverseOS Team">
+    <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+    <meta name="theme-color" content="#4f46e5">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="UniverseOS – Social Web3 & Corretora Cripto">
+    <meta property="og:description" content="Rede social com corretora integrada, IA de investimentos, vídeos curtos e notícias em tempo real.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://universeos.io/">
+    <meta property="og:image" content="https://universeos.io/assets/og.png">
+    <meta property="og:locale" content="pt_BR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="UniverseOS">
+    <meta name="twitter:description" content="Rede social Web3 com corretora, IA e notícias globais.">
+    <meta name="twitter:image" content="https://universeos.io/assets/tc.png">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://universeos.io/">
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebSite","name":"UniverseOS","url":"https://universeos.io/","potentialAction":{"@type":"SearchAction","target":"https://universeos.io/search?q={q}","query-input":"required name=q"}}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Organization","name":"UniverseOS","url":"https://universeos.io/","logo":"https://universeos.io/assets/logo.png","sameAs":["https://twitter.com/UniverseOS","https://t.me/UniverseOS"]}
+    </script>
+
+    <!-- CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <style> 
+            /* ARTIGOS */
+        .article-card{
+            background:var(--g1);border-radius:var(--r);padding:1.25rem;
+            margin-bottom:1rem;box-shadow:var(--sh);transition:var(--tr);
+            border-left:3px solid var(--p)
+        }
+        .article-card:hover{background:var(--g2)}
+        .article-card .article-title{
+            font-size:1.15rem;font-weight:700;color:var(--p);
+            margin-bottom:.4rem;cursor:pointer
+        }
+        .article-card .article-title:hover{text-decoration:underline}
+        .article-card .article-meta{
+            font-size:.72rem;color:var(--m);margin-bottom:.6rem;
+            display:flex;gap:.75rem;flex-wrap:wrap;align-items:center
+        }
+        .article-card .article-excerpt{
+            font-size:.85rem;color:var(--t);line-height:1.7;
+            max-height:120px;overflow:hidden;position:relative
+        }
+        .article-card .article-excerpt::after{
+            content:'';position:absolute;bottom:0;left:0;right:0;
+            height:40px;background:linear-gradient(transparent,var(--g1))
+        }
+        .article-card:hover .article-excerpt::after{
+            background:linear-gradient(transparent,var(--g2))
+        }
+        .article-card .article-tags{
+            display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.5rem
+        }
+        .article-card .article-tag{
+            background:var(--p);color:#fff;font-size:.65rem;
+            padding:.15rem .45rem;border-radius:1rem;font-weight:600
+        }
+        .article-card .article-actions{
+            display:flex;gap:.6rem;margin-top:.6rem;flex-wrap:wrap
+        }
+        .article-card .article-actions button{
+            background:transparent;color:var(--m);font-size:.78rem;
+            display:flex;align-items:center;gap:.2rem;transition:var(--tr)
+        }
+        .article-card .article-actions button:hover{color:var(--p)}
+
+        /* ARTIGO COMPLETO (modal) */
+        .article-full{
+            font-size:.92rem;line-height:1.9;color:var(--t)
+        }
+        .article-full h1{font-size:1.4rem;color:var(--p);margin:1rem 0 .5rem;font-weight:700}
+        .article-full h2{font-size:1.2rem;color:var(--acc);margin:.8rem 0 .4rem;font-weight:600}
+        .article-full h3{font-size:1.05rem;color:var(--ok);margin:.6rem 0 .3rem;font-weight:600}
+        .article-full p{margin-bottom:.6rem}
+        .article-full ul,.article-full ol{margin:.4rem 0 .6rem 1.5rem}
+        .article-full li{margin-bottom:.3rem}
+        .article-full blockquote{
+            border-left:3px solid var(--p);padding:.5rem 1rem;
+            margin:.5rem 0;background:var(--g2);border-radius:0 var(--r) var(--r) 0;
+            font-style:italic;color:var(--m)
+        }
+        .article-full code{
+            background:var(--g2);padding:.1rem .4rem;border-radius:.3rem;
+            font-family:'Fira Code',monospace;font-size:.82rem;color:var(--acc)
+        }
+        .article-full pre{
+            background:var(--g2);padding:.75rem;border-radius:var(--r);
+            overflow-x:auto;margin:.5rem 0;font-size:.8rem
+        }
+        .article-full hr{
+            border:none;border-top:1px solid var(--m);margin:1rem 0
+        }
+        .article-full a{color:var(--p);text-decoration:underline}
+        .article-full strong{color:var(--acc)}
+        .article-full em{color:var(--ok)}
+        .article-stats{
+            display:flex;gap:1rem;font-size:.78rem;color:var(--m);
+            margin-top:1rem;padding-top:.5rem;border-top:1px solid var(--g2)
+        }
+        :root{
+            --p:#4f46e5;--pd:#4338ca;--acc:#fbbf24;--ok:#10b981;--err:#ef4444;
+            --m:#6b7280;--bg:rgba(10,10,10,.85);--g1:rgba(20,20,20,.45);
+            --g2:rgba(30,30,30,.65);--t:#e0e0e0;--r:.75rem;
+            --sh:0 8px 32px rgba(0,0,0,.38);--tr:all .25s ease;
+            --ff:'Inter',system-ui,sans-serif;
+        }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{font-size:16px;scroll-behavior:smooth}
+        body{font-family:var(--ff);background:#0a0a0a;color:var(--t);min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased}
+        .hidden{display:none!important}
+        button{cursor:pointer;border:none;font-family:inherit}
+        input,select,textarea{background:var(--g1);border:1px solid var(--m);border-radius:var(--r);color:var(--t);padding:.5rem .75rem;font-size:.9rem;width:100%;transition:var(--tr)}
+        input:focus,select:focus,textarea:focus{outline:none;border-color:var(--p);background:var(--g2)}
+        .bp{background:var(--p);color:#fff;border-radius:var(--r);padding:.5rem 1rem;font-weight:600;transition:var(--tr)}
+        .bp:hover{background:var(--pd)}
+        .bs{background:var(--g1);color:var(--t);border:1px solid var(--m);border-radius:var(--r);padding:.5rem 1rem;font-weight:600}
+        .bc{background:var(--acc);color:#111;border-radius:var(--r);padding:.5rem 1rem;font-weight:600}
+        .bc:hover{background:#f59e0b}
+        .bdanger{background:var(--err);color:#fff;border-radius:var(--r);padding:.5rem 1rem;font-weight:600}
+        .bok{background:var(--ok);color:#fff;border-radius:var(--r);padding:.5rem 1rem;font-weight:600}
+
+        /* NAVBAR */
+        #navbar{position:sticky;top:0;width:100%;background:var(--bg);backdrop-filter:blur(14px);box-shadow:var(--sh);padding:.65rem 1.5rem;display:flex;justify-content:space-between;align-items:center;z-index:1000;flex-wrap:wrap;gap:.5rem}
+        .logo{font-size:1.3rem;font-weight:800;color:var(--p);text-decoration:none}
+        .nav-links{list-style:none;display:flex;gap:1rem;flex-wrap:wrap}
+        .nav-links a{color:var(--t);text-decoration:none;font-weight:500;font-size:.85rem;transition:var(--tr)}
+        .nav-links a:hover,.nav-links a.active{color:var(--p)}
+        #wallet-status span{font-size:.72rem;display:block}
+
+        /* SIDEBAR */
+        #sidebar{position:fixed;top:3.75rem;left:0;width:220px;height:calc(100vh - 3.75rem);background:var(--g1);backdrop-filter:blur(8px);padding:.75rem;overflow-y:auto;z-index:500}
+        .cat-list{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+        .cat-list a{display:block;color:var(--m);text-decoration:none;padding:.35rem .6rem;border-radius:var(--r);font-size:.8rem;transition:var(--tr)}
+        .cat-list a:hover,.cat-list a.active{background:var(--g2);color:var(--p)}
+
+        /* MAIN */
+        .main{margin-left:220px;display:grid;grid-template-columns:1fr 320px;gap:1rem;padding:1rem}
+
+        /* FEED */
+        .section-box{background:var(--bg);backdrop-filter:blur(6px);border-radius:var(--r);box-shadow:var(--sh);padding:1rem;margin-bottom:1rem}
+        .section-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem}
+        .section-hdr h2{font-size:1.3rem;color:var(--p)}
+
+        /* POST */
+        #feed-container{display:flex;flex-direction:column;gap:1.25rem}
+        .post{background:var(--g1);border-radius:var(--r);padding:1rem;box-shadow:var(--sh);transition:var(--tr)}
+        .post:hover{background:var(--g2)}
+        .post-hdr{display:flex;align-items:center;gap:.6rem}
+        .post-av{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--g2)}
+        .post-uinfo{flex:1}
+        .post-un{font-weight:600;color:var(--p);font-size:.85rem}
+        .post-ts{font-size:.68rem;color:var(--m)}
+        .post-opt{background:transparent;color:var(--m);font-size:1.1rem}
+        .post-body{margin-top:.6rem}
+        .post-txt{margin-bottom:.4rem;font-size:.88rem}
+        .post-media{max-width:100%;overflow:hidden;border-radius:var(--r)}
+        .post-media img,.post-media video{width:100%;border-radius:var(--r)}
+        .post-ft{display:flex;gap:.6rem;margin-top:.6rem;flex-wrap:wrap}
+        .post-ft button{background:transparent;color:var(--m);font-size:.8rem;display:flex;align-items:center;gap:.2rem;transition:var(--tr)}
+        .post-ft button:hover{color:var(--p)}
+
+        /* UPLOAD VIDEO */
+        .upload-zone{border:2px dashed var(--m);border-radius:var(--r);padding:1.5rem;text-align:center;cursor:pointer;transition:var(--tr);margin:.5rem 0}
+        .upload-zone:hover{border-color:var(--p);background:var(--g2)}
+        .upload-zone input{display:none}
+        .upload-preview{margin-top:.5rem}
+        .upload-preview video,.upload-preview img{max-width:100%;max-height:200px;border-radius:var(--r)}
+
+        /* SHORT VIDEOS */
+        .shorts-container{display:flex;gap:.75rem;overflow-x:auto;padding:.5rem 0}
+        .short-card{min-width:160px;max-width:160px;background:var(--g1);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:var(--tr);flex-shrink:0}
+        .short-card:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+        .short-card video{width:100%;height:220px;object-fit:cover}
+        .short-card .short-info{padding:.4rem;font-size:.72rem;color:var(--m)}
+
+        /* MESSAGES */
+        .msg-container{display:flex;height:400px;background:var(--g1);border-radius:var(--r);overflow:hidden}
+        .msg-sidebar{width:200px;border-right:1px solid var(--m);overflow-y:auto}
+        .msg-contact{padding:.5rem;display:flex;align-items:center;gap:.4rem;cursor:pointer;transition:var(--tr);font-size:.82rem}
+        .msg-contact:hover,.msg-contact.active{background:var(--g2)}
+        .msg-contact img{width:32px;height:32px;border-radius:50%}
+        .msg-main{flex:1;display:flex;flex-direction:column}
+        .msg-header{padding:.5rem .75rem;border-bottom:1px solid var(--m);font-weight:600;color:var(--p);font-size:.9rem}
+        .msg-body{flex:1;overflow-y:auto;padding:.5rem .75rem;display:flex;flex-direction:column;gap:.3rem}
+        .msg-bubble{max-width:70%;padding:.4rem .65rem;border-radius:var(--r);font-size:.82rem}
+        .msg-sent{align-self:flex-end;background:var(--p);color:#fff}
+        .msg-recv{align-self:flex-start;background:var(--g2);color:var(--t)}
+        .msg-input-area{display:flex;gap:.3rem;padding:.4rem}
+        .msg-input-area input{flex:1}
+
+        /* PROFILE EDIT */
+        .profile-edit{display:flex;flex-direction:column;gap:.75rem;max-width:500px;margin:0 auto}
+        .cover-upload{width:100%;height:160px;background:var(--g2);border-radius:var(--r);overflow:hidden;position:relative;cursor:pointer}
+        .cover-upload img{width:100%;height:100%;object-fit:cover}
+        .cover-upload .cover-btn{position:absolute;bottom:.5rem;right:.5rem;font-size:.72rem}
+        .avatar-edit{display:flex;align-items:center;gap:1rem;margin-top:-40px;padding-left:1rem}
+        .avatar-edit img{width:80px;height:80px;border-radius:50%;border:3px solid var(--p);object-fit:cover;cursor:pointer}
+
+        /* NEWS */
+        .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem}
+        .news-card{background:var(--g1);border-radius:var(--r);overflow:hidden;transition:var(--tr);cursor:pointer}
+        .news-card:hover{background:var(--g2);transform:translateY(-2px)}
+        .news-card img{width:100%;height:130px;object-fit:cover}
+        .news-card .news-body{padding:.6rem}
+        .news-card h4{font-size:.85rem;margin-bottom:.3rem;color:var(--t)}
+        .news-card p{font-size:.72rem;color:var(--m)}
+        .news-card .news-src{font-size:.65rem;color:var(--p);margin-top:.3rem}
+
+        /* EXCHANGE */
+        .coin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem}
+        .coin-card{background:var(--g1);border-radius:var(--r);padding:.75rem;display:flex;align-items:center;gap:.6rem;transition:var(--tr);cursor:pointer}
+        .coin-card:hover{background:var(--g2);transform:translateY(-2px)}
+        .coin-card.selected{border:1px solid var(--p)}
+        .coin-icon{width:32px;height:32px;border-radius:50%}
+        .coin-info{flex:1}
+        .coin-name{font-weight:600;font-size:.85rem}
+        .coin-sym{font-size:.7rem;color:var(--m);text-transform:uppercase}
+        .coin-price{font-weight:700;font-size:.9rem;color:var(--p)}
+        .coin-change{font-size:.7rem;font-weight:600}
+        .coin-change.up{color:var(--ok)}
+        .coin-change.down{color:var(--err)}
+
+        /* TRADE */
+        .trade-panel{background:var(--g1);border-radius:var(--r);padding:1rem;margin-top:.75rem}
+        .trade-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+        .trade-hdr h3{color:var(--p);font-size:1rem}
+        .trade-tabs{display:flex;gap:.4rem}
+        .trade-tab{padding:.3rem .65rem;border-radius:var(--r);font-size:.8rem;font-weight:600;transition:var(--tr)}
+        .trade-tab.buy-active{background:var(--ok);color:#fff}
+        .trade-tab.sell-active{background:var(--err);color:#fff}
+        .trade-tab:not(.buy-active):not(.sell-active){background:var(--g2);color:var(--m)}
+        .trade-form{display:flex;flex-direction:column;gap:.4rem}
+        .trade-row{display:flex;gap:.4rem;align-items:center}
+        .trade-row label{font-size:.75rem;color:var(--m);min-width:55px}
+        .trade-row input{flex:1}
+        .trade-total{font-size:.82rem;color:var(--acc);text-align:right;margin-top:.2rem}
+
+        /* AI ADVISOR */
+        .ai-box{background:linear-gradient(135deg,rgba(79,70,229,.15),rgba(251,191,36,.1));border:1px solid var(--p);border-radius:var(--r);padding:1rem}
+        .ai-box h3{color:var(--acc);margin-bottom:.5rem;font-size:1rem}
+        .ai-chat{max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:.4rem;margin-bottom:.5rem}
+        .ai-msg{padding:.4rem .65rem;border-radius:var(--r);font-size:.82rem;max-width:85%}
+        .ai-user{align-self:flex-end;background:var(--p);color:#fff}
+        .ai-bot{align-self:flex-start;background:var(--g2);color:var(--t)}
+        .ai-input-area{display:flex;gap:.3rem}
+        .ai-input-area input{flex:1}
+
+        /* SEARCH ENGINE */
+        .search-box{background:var(--g1);border-radius:var(--r);padding:1rem}
+        .search-box h3{color:var(--p);margin-bottom:.5rem;font-size:1rem}
+        .search-results{display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem;max-height:400px;overflow-y:auto}
+        .search-result{background:var(--g2);border-radius:var(--r);padding:.6rem;cursor:pointer;transition:var(--tr)}
+        .search-result:hover{background:var(--p);color:#fff}
+        .search-result h4{font-size:.85rem;margin-bottom:.2rem}
+        .search-result p{font-size:.72rem;color:var(--m)}
+        .search-result a{font-size:.68rem;color:var(--acc);text-decoration:none}
+
+        /* PORTFOLIO */
+        .port-item{display:flex;justify-content:space-between;align-items:center;padding:.4rem .5rem;background:var(--g2);border-radius:var(--r);font-size:.8rem;margin-bottom:.3rem}
+        .port-coin{display:flex;align-items:center;gap:.4rem}
+        .port-coin img{width:18px;height:18px;border-radius:50%}
+        .port-val{color:var(--p);font-weight:600}
+
+        /* HISTORY */
+        .hist-item{display:flex;justify-content:space-between;font-size:.75rem;padding:.3rem .5rem;background:var(--g2);border-radius:var(--r);margin-bottom:.2rem}
+        .hist-type{font-weight:600}
+        .hist-type.buy{color:var(--ok)}
+        .hist-type.sell{color:var(--err)}
+
+        /* CHART */
+        .chart-wrap{background:var(--g1);border-radius:var(--r);padding:.65rem;margin-top:.75rem}
+        .chart-wrap canvas{width:100%!important;max-height:220px}
+
+        /* RIGHT PANEL */
+        .right-panel{display:flex;flex-direction:column;gap:.75rem}
+
+        /* MODAL */
+        .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:2000}
+        .modal-box{background:var(--g1);border-radius:var(--r);padding:1.5rem;width:90%;max-width:500px;box-shadow:var(--sh);animation:fadeIn .3s ease-out;max-height:90vh;overflow-y:auto}
+        .modal-hdr{display:flex;justify-content:space-between;align-items:center}
+        .modal-hdr h2{color:var(--p);font-size:1.2rem}
+        .modal-close{background:transparent;color:var(--m);font-size:1.2rem}
+        .modal-body{margin-top:.75rem}
+
+        /* TERMS */
+        .terms-content{max-height:60vh;overflow-y:auto;font-size:.82rem;line-height:1.7;color:var(--m);padding:.5rem}
+        .terms-content h3{color:var(--t);margin:1rem 0 .3rem}
+        .terms-content p{margin-bottom:.5rem}
+
+        /* STORIES */
+        .stories{overflow-x:auto;white-space:nowrap;padding:.4rem 0;margin-bottom:.5rem}
+        .stories-wrap{display:inline-flex;gap:.6rem}
+        .story{width:68px;flex-shrink:0;text-align:center}
+        .story img{width:100%;height:68px;object-fit:cover;border-radius:50%;border:2px solid var(--p)}
+        .story span{font-size:.65rem;color:var(--m)}
+
+        /* TRENDS */
+        #trends{position:fixed;bottom:.75rem;right:.75rem;width:200px;background:var(--g1);backdrop-filter:blur(8px);border-radius:var(--r);padding:.6rem;box-shadow:var(--sh);z-index:600}
+        #trends h3{font-size:.85rem;color:var(--p);margin-bottom:.3rem}
+        #trends li{list-style:none;padding:.15rem 0;color:var(--m);font-size:.72rem;cursor:pointer;transition:var(--tr)}
+        #trends li:hover{color:var(--acc)}
+
+        /* FOOTER */
+        #footer{margin-top:2rem;padding:.75rem 1.5rem;background:var(--bg);color:var(--m);display:flex;justify-content:space-between;font-size:.72rem;flex-wrap:wrap;gap:.5rem}
+        #footer a{color:var(--m);text-decoration:none;margin-right:.75rem}
+        #footer a:hover{color:var(--p)}
+
+        /* PRIVACY BANNER */
+        #priv-banner{position:fixed;bottom:0;left:0;width:100%;background:rgba(0,0,0,.92);color:var(--t);padding:.75rem;text-align:center;z-index:3000;font-size:.82rem}
+
+        /* ANIMATIONS */
+        @keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+
+        /* RESPONSIVE */
+        @media(max-width:1200px){.main{grid-template-columns:1fr;margin-left:220px}}
+        @media(max-width:768px){#sidebar{display:none}.main{margin-left:0}#navbar{flex-direction:column;align-items:flex-start}.nav-links{gap:.6rem}.msg-sidebar{width:140px}}
+        @media(max-width:480px){.coin-grid{grid-template-columns:1fr}.news-grid{grid-template-columns:1fr}#trends{width:90%;right:5%}.shorts-container{flex-direction:column}.short-card{min-width:100%;max-width:100%}}
+    
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <div style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap">
+            <a href="#" class="logo">🌌 UniverseOS</a>
+            <ul class="nav-links">
+                <li><a href="#" data-tab="feed" class="active">Feed</a></li>
+                <li><a href="#" data-tab="shorts">Shorts</a></li>
+                <li><a href="#" data-tab="messages">Chat</a></li>
+                <li><a href="#" data-tab="news">Notícias</a></li>
+                <li><a href="#" data-tab="exchange">Corretora</a></li>
+                <li><a href="#" data-tab="search">Buscar</a></li>
+                <li><a href="#" data-tab="ai">IA Invest</a></li>
+                <li><a href="#" data-tab="marketplace">NFTs</a></li>
+                <li><a href="#" data-tab="governance">DAO</a></li>
+                <li><a href="#" data-tab="profile">Perfil</a></li>
+            </ul>
+        </div>
+        <div style="display:flex;align-items:center;gap:.6rem">
+            <button id="terms-btn" class="bs" style="font-size:.72rem">Termos</button>
+            <button id="connect-wallet" class="bc">Connect Wallet</button>
+            <div id="wallet-status" class="hidden">
+                <span id="wallet-addr"></span>
+                <span id="wallet-bal"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar">
+        <ul class="cat-list">
+            <li><a href="#" data-category="games">🎮 Games</a></li>
+            <li><a href="#" data-category="bible">📖 Bíblia</a></li>
+            <li><a href="#" data-category="investment">💰 Investimento</a></li>
+            <li><a href="#" data-category="tech">💻 Tecnologia</a></li>
+            <li><a href="#" data-category="art">🎨 Arte</a></li>
+            <li><a href="#" data-category="music">🎵 Música</a></li>
+            <li><a href="#" data-category="sports">⚽ Esportes</a></li>
+            <li><a href="#" data-category="fashion">👗 Moda</a></li>
+            <li><a href="#" data-category="travel">✈️ Viagens</a></li>
+            <li><a href="#" data-category="food">🍕 Comida</a></li>
+            <li><a href="#" data-category="science">🔬 Ciência</a></li>
+            <li><a href="#" data-category="health">❤️ Saúde</a></li>
+            <li><a href="#" data-category="education">📚 Educação</a></li>
+            <li><a href="#" data-category="crypto">₿ Cripto</a></li>
+            <li><a href="#" data-category="news">📰 Notícias</a></li>
+            <li><a href="#" data-category="ai">🤖 IA</a></li>
+            <li><a href="#" data-category="space">🚀 Espaço</a></li>
+            <li><a href="#" data-category="blockchain">⛓️ Blockchain</a></li>
+            <li><a href="#" data-category="web3">🌐 Web3</a></li>
+            <li><a href="#" data-category="opensource">🐧 Open Source</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN GRID -->
+    <div class="main">
+        <div>
+            <!-- STORIES -->
+            <section class="stories">
+                <div class="stories-wrap">
+                    <div class="story"><img src="https://i.pravatar.cc/70?img=1" alt=""/><span>@ana</span></div>
+                    <div class="story"><img src="https://i.pravatar.cc/70?img=2" alt=""/><span>@leo</span></div>
+                    <div class="story"><img src="https://i.pravatar.cc/70?img=3" alt=""/><span>@mia</span></div>
+                    <div class="story"><img src="https://i.pravatar.cc/70?img=4" alt=""/><span>@dev</span></div>
+                    <div class="story"><img src="https://i.pravatar.cc/70?img=5" alt=""/><span>@nft</span></div>
+                    <div class="story"><img src="https://i.pravatar.cc/70?img=6" alt=""/><span>@web3</span></div>
+                </div>
+            </section>
+
+            <!-- ===== FEED ===== -->
+            <section id="feed-section" class="section-box">
+                <header class="section-hdr">
+                    <h2>📰 Feed Universal</h2>
+                </header>
+                <!-- Criar post -->
+                <div style="margin-bottom:1rem">
+                    <textarea id="post-input" rows="2" placeholder="O que está acontecendo? (use /eai-boy URL para YouTube)"></textarea>
+                    <div class="upload-zone" id="upload-zone">
+                        <p>📎 Clique ou arraste para enviar vídeo/imagem</p>
+                        <input type="file" id="file-input" accept="video/*,image/*"/>
+                    </div>
+                    <div class="upload-preview" id="upload-preview"></div>
+                    <div style="display:flex;justify-content:flex-end;gap:.4rem;margin-top:.4rem">
+                        <button id="post-btn" class="bp">Postar</button>
+                    </div>
+                </div>
+                <div id="feed-container"></div>
+            </section>
+                        <!-- ===== ARTIGOS ===== -->
+            <section id="articles-section" class="section-box hidden">
+                <header class="section-hdr">
+                    <h2>📝 Artigos</h2>
+                    <div style="display:flex;gap:.4rem;align-items:center">
+                        <button id="upload-article-btn" class="bp" style="font-size:.8rem">📄 Publicar .txt</button>
+                        <input type="file" id="article-file-input" accept=".txt,text/plain" style="display:none"/>
+                    </div>
+                </header>
+
+                <!-- Preview antes de publicar -->
+                <div id="article-preview-area" class="hidden" style="margin-bottom:1rem">
+                    <div style="background:var(--g2);border-radius:var(--r);padding:1rem;border:1px solid var(--p)">
+                        <h3 style="color:var(--acc);margin-bottom:.5rem;font-size:.95rem">📋 Preview do Artigo</h3>
+                        <input type="text" id="article-title-input" placeholder="Título do artigo (ou será detectado do .txt)" style="margin-bottom:.5rem;font-weight:600"/>
+                        <input type="text" id="article-tags-input" placeholder="Tags separadas por vírgula (ex: cripto, web3, defi)" style="margin-bottom:.5rem"/>
+                        <select id="article-category" style="margin-bottom:.5rem">
+                            <option value="general">Geral</option>
+                            <option value="tech">Tecnologia</option>
+                            <option value="crypto">Criptomoedas</option>
+                            <option value="finance">Finanças</option>
+                            <option value="science">Ciência</option>
+                            <option value="health">Saúde</option>
+                            <option value="education">Educação</option>
+                            <option value="entertainment">Entretenimento</option>
+                            <option value="gaming">Games</option>
+                            <option value="art">Arte</option>
+                            <option value="opinion">Opinião</option>
+                            <option value="tutorial">Tutorial</option>
+                        </select>
+                        <div id="article-preview-content" style="background:var(--g1);border-radius:var(--r);padding:1rem;max-height:400px;overflow-y:auto;font-size:.88rem;line-height:1.8"></div>
+                        <div style="display:flex;gap:.4rem;justify-content:flex-end;margin-top:.75rem">
+                            <button id="article-publish-btn" class="bp">✅ Publicar Artigo</button>
+                            <button id="article-cancel-btn" class="bs">❌ Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtros -->
+                <div style="display:flex;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap">
+                    <input type="search" id="article-search" placeholder="Buscar artigos…" style="max-width:250px"/>
+                    <select id="article-filter-cat" style="max-width:150px">
+                        <option value="all">Todas categorias</option>
+                        <option value="tech">Tecnologia</option>
+                        <option value="crypto">Criptomoedas</option>
+                        <option value="finance">Finanças</option>
+                        <option value="science">Ciência</option>
+                        <option value="health">Saúde</option>
+                        <option value="education">Educação</option>
+                        <option value="tutorial">Tutorial</option>
+                    </select>
+                    <select id="article-sort" style="max-width:130px">
+                        <option value="newest">Mais recentes</option>
+                        <option value="oldest">Mais antigos</option>
+                        <option value="popular">Mais curtidos</option>
+                    </select>
+                </div>
+
+                <!-- Lista de artigos publicados -->
+                <div id="articles-container"></div>
+            </section>
+            <!-- ===== SHORTS (vídeos curtos) ===== -->
+            <section id="shorts-section" class="section-box hidden">
+                <header class="section-hdr">
+                    <h2>🎬 Vídeos Curtos</h2>
+                    <button id="upload-short-btn" class="bp" style="font-size:.8rem">Enviar Short</button>
+                </header>
+                <div id="shorts-container" class="shorts-container"></div>
+            </section>
+
+            <!-- ===== MENSAGENS ===== -->
+            <section id="messages-section" class="section-box hidden">
+                <header class="section-hdr"><h2>💬 Mensagens</h2></header>
+                <div class="msg-container">
+                    <div class="msg-sidebar" id="msg-contacts"></div>
+                    <div class="msg-main">
+                        <div class="msg-header" id="msg-hdr">Selecione um contato</div>
+                        <div class="msg-body" id="msg-body"></div>
+                        <div class="msg-input-area">
+                            <input type="text" id="msg-input" placeholder="Digite sua mensagem…"/>
+                            <button class="bp" id="msg-send">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== NOTÍCIAS ===== -->
+            <section id="news-section" class="section-box hidden">
+                <header class="section-hdr">
+                    <h2>🌍 Notícias do Mundo</h2>
+                    <select id="news-category" style="max-width:160px">
+                        <option value="top">Destaques</option>
+                        <option value="business">Negócios</option>
+                        <option value="technology">Tecnologia</option>
+                        <option value="science">Ciência</option>
+                        <option value="sports">Esportes</option>
+                        <option value="entertainment">Entretenimento</option>
+                        <option value="health">Saúde</option>
+                    </select>
+                </header>
+                <div id="news-grid" class="news-grid"></div>
+            </section>
+
+            <!-- ===== CORRETORA ===== -->
+            <section id="exchange-section" class="section-box hidden">
+                <header class="section-hdr">
+                    <h2>📈 Corretora Cripto</h2>
+                    <input type="search" id="crypto-search" placeholder="Buscar moeda…" style="max-width:200px"/>
+                </header>
+                <div id="coin-grid" class="coin-grid"></div>
+                <div class="chart-wrap"><canvas id="coin-chart"></canvas></div>
+                <div class="trade-panel">
+                    <div class="trade-hdr">
+                        <h3 id="trade-coin-name">Selecione uma moeda</h3>
+                        <div class="trade-tabs">
+                            <button class="trade-tab buy-active" id="tab-buy">Comprar</button>
+                            <button class="trade-tab" id="tab-sell">Vender</button>
+                        </div>
+                    </div>
+                    <div class="trade-form">
+                        <div class="trade-row"><label>Preço</label><input type="number" id="trade-price" placeholder="0.00" readonly/></div>
+                        <div class="trade-row"><label>Qtd.</label><input type="number" id="trade-qty" placeholder="0" min="0" step="0.0001"/></div>
+                        <p class="trade-total">Total: $<span id="trade-total">0.00</span></p>
+                        <button id="exec-trade" class="bp" style="width:100%">Comprar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== BUSCA ===== -->
+            <section id="search-section" class="section-box hidden">
+                <div class="search-box">
+                    <h3>🔎 Buscar na Internet</h3>
+                    <div style="display:flex;gap:.4rem">
+                        <input type="text" id="search-input" placeholder="Pesquisar…"/>
+                        <button class="bp" id="search-btn">Buscar</button>
+                    </div>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </section>
+
+            <!-- ===== IA INVESTIMENTOS ===== -->
+            <section id="ai-section" class="section-box hidden">
+                <div class="ai-box">
+                    <h3>🤖 IA – Consultor de Investimentos</h3>
+                    <div id="ai-chat" class="ai-chat"></div>
+                    <div class="ai-input-area">
+                        <input type="text" id="ai-input" placeholder="Pergunte sobre investimentos em cripto…"/>
+                        <button class="bp" id="ai-send">Enviar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== MARKETPLACE ===== -->
+            <section id="marketplace-section" class="section-box hidden">
+                <h2 style="color:var(--p);margin-bottom:.75rem">🖼️ Marketplace NFT</h2>
+                <div class="nft-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.75rem">
+                    <div class="nft-card" style="background:var(--g1);border-radius:var(--r);padding:.6rem;text-align:center"><img src="https://placehold.co/300x200/222/4f46e5?text=NFT+1" style="width:100%;height:100px;object-fit:cover;border-radius:var(--r)"/><p style="font-size:.82rem;margin:.3rem 0">Arte #1</p><p style="font-size:.72rem;color:var(--acc)">0.25 ETH</p><button class="bp" style="font-size:.72rem;width:100%">Comprar</button></div>
+                    <div class="nft-card" style="background:var(--g1);border-radius:var(--r);padding:.6rem;text-align:center"><img src="https://placehold.co/300x200/222/fbbf24?text=NFT+2" style="width:100%;height:100px;object-fit:cover;border-radius:var(--r)"/><p style="font-size:.82rem;margin:.3rem 0">Coleção X</p><p style="font-size:.72rem;color:var(--acc)">1.10 ETH</p><button class="bp" style="font-size:.72rem;width:100%">Comprar</button></div>
+                </div>
+            </section>
+
+            <!-- ===== GOVERNANÇA ===== -->
+            <div id="gov-modal" class="modal hidden">
+                <div class="modal-box">
+                    <div class="modal-hdr"><h2>🗳️ Votação DAO</h2><button class="modal-close" id="gov-close">✖</button></div>
+                    <div class="modal-body">
+                        <form id="gov-form">
+                            <label>Proposta</label>
+                            <select id="prop-sel"><option value="1">Atualizar taxas</option><option value="2">Novo token</option><option value="3">Mudança de quorum</option></select>
+                            <div style="margin-top:.5rem;display:flex;gap:1rem">
+                                <label><input type="radio" name="vote" value="yes"/> Sim</label>
+                                <label><input type="radio" name="vote" value="no"/> Não</label>
+                                <label><input type="radio" name="vote" value="abstain"/> Abstém</label>
+                            </div>
+                            <button type="submit" class="bp" style="width:100%;margin-top:.75rem">Votar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+           
+                        <!-- ===== PÁGINA SOBRE ===== -->
+            <section id="about-section" class="section-box hidden">
+                <header class="section-hdr">
+                    <h2 id="about-title">🌌 Sobre o UniverseOS</h2>
+                </header>
+                <div class="about-content">
+                    <div class="about-hero">
+                        <img src="https://placehold.co/800x300/111/4f46e5?text=UniverseOS" alt="UniverseOS Banner" style="width:100%;border-radius:var(--r);margin-bottom:1rem"/>
+                    </div>
+
+                    <div class="about-text">
+                        <h3>O que é o UniverseOS?</h3>
+                        <p>O UniverseOS é a rede social Web3 de próxima geração que combina o melhor de 100 plataformas em uma única experiência. Nosso objetivo é devolver o poder aos usuários através da tecnologia blockchain, permitindo que cada interação gere valor real.</p>
+
+                        <h3>Nossa Missão</h3>
+                        <p>Democratizar o acesso a ferramentas financeiras descentralizadas, criando um ecossistema onde conteúdo, comunidade e capital coexistem de forma transparente e segura. Acreditamos que o futuro da internet é descentralizado, e estamos construindo isso agora.</p>
+
+                        <h3>O que nos torna únicos</h3>
+                        <ul>
+                            <li><strong>Feed Social Multimodal</strong> – Texto, vídeo, imagens e threads em um único feed inteligente</li>
+                            <li><strong>Corretora Integrada</strong> – Compre e venda criptomoedas sem sair da rede social</li>
+                            <li><strong>IA de Investimentos</strong> – Análise técnica avançada com RSI, médias móveis e previsões</li>
+                            <li><strong>Vídeos Curtos</strong> – Crie e compartilhe shorts com auto-play e engagement</li>
+                            <li><strong>Marketplace NFT</strong> – Compre, venda e descubra arte digital</li>
+                            <li><strong>Governança DAO</strong> – Vote em propostas que moldam o futuro da plataforma</li>
+                            <li><strong>Notícias Globais</strong> – Fique informado com notícias de todo o mundo em tempo real</li>
+                            <li><strong>Sistema de Artigos</strong> – Publique conteúdo longo via arquivos .txt com formatação automática</li>
+                            <li><strong>7 Idiomas</strong> – Disponível em português, inglês, espanhol, francês, alemão, chinês e japonês</li>
+                            <li><strong>Autenticação Web3</strong> – Login via MetaMask, sem necessidade de email ou senha</li>
+                        </ul>
+
+                        <h3>Tecnologias</h3>
+                        <div class="tech-grid">
+                            <div class="tech-item">
+                                <strong>Frontend</strong>
+                                <p>HTML5 Semântico, CSS3 Glassmorphism, JavaScript ES6+</p>
+                            </div>
+                            <div class="tech-item">
+                                <strong>Blockchain</strong>
+                                <p>Ethers.js, MetaMask, Smart Contracts, ERC-20/721</p>
+                            </div>
+                            <div class="tech-item">
+                                <strong>APIs</strong>
+                                <p>CoinGecko, NewsData.io, Google Custom Search, Gemini AI</p>
+                            </div>
+                            <div class="tech-item">
+                                <strong>Backend</strong>
+                                <p>IndexedDB, Service Worker, PWA, LocalStorage</p>
+                            </div>
+                        </div>
+
+                        <h3>Equipe</h3>
+                        <div class="team-grid">
+                            <div class="team-member">
+                                <img src="https://i.pravatar.cc/80?img=30" alt="Fundador"/>
+                                <strong>Fundador & CEO</strong>
+                                <p>Visionário Web3 e desenvolvedor full-stack</p>
+                            </div>
+                            <div class="team-member">
+                                <img src="https://i.pravatar.cc/80?img=31" alt="CTO"/>
+                                <strong>CTO</strong>
+                                <p>Especialista em blockchain e smart contracts</p>
+                            </div>
+                            <div class="team-member">
+                                <img src="https://i.pravatar.cc/80?img=32" alt="Designer"/>
+                                <strong>Head of Design</strong>
+                                <p>UI/UX designer com foco em glassmorphism</p>
+                            </div>
+                            <div class="team-member">
+                                <img src="https://i.pravatar.cc/80?img=33" alt="AI Lead"/>
+                                <strong>AI Lead</strong>
+                                <p>Engenheiro de IA e análise de dados</p>
+                            </div>
+                        </div>
+
+                        <h3>Contato</h3>
+                        <div class="contact-info">
+                            <p>📧 Email: <a href="mailto:contact@universeos.io" style="color:var(--p)">contact@universeos.io</a></p>
+                            <p>🐦 Twitter: <a href="https://twitter.com/UniverseOS" target="_blank" style="color:var(--p)">@UniverseOS</a></p>
+                            <p>💬 Telegram: <a href="https://t.me/UniverseOS" target="_blank" style="color:var(--p)">t.me/UniverseOS</a></p>
+                            <p>🐙 GitHub: <a href="https://github.com/UniverseOS" target="_blank" style="color:var(--p)">github.com/UniverseOS</a></p>
+                        </div>
+
+                        <h3>Roadmap 2026</h3>
+                        <div class="roadmap">
+                            <div class="roadmap-item done">
+                                <span class="roadmap-dot">✅</span>
+                                <div>
+                                    <strong>Q1 2026 – Lançamento</strong>
+                                    <p>Rede social, corretora, IA, artigos, i18n</p>
+                                </div>
+                            </div>
+                            <div class="roadmap-item done">
+                                <span class="roadmap-dot">✅</span>
+                                <div>
+                                    <strong>Q2 2026 – Expansão</strong>
+                                    <p>7 idiomas, backend IndexedDB, PWA</p>
+                                </div>
+                            </div>
+                            <div class="roadmap-item">
+                                <span class="roadmap-dot">🔄</span>
+                                <div>
+                                    <strong>Q3 2026 – Smart Contracts</strong>
+                                    <p>Deploy de contratos reais, staking, token nativo</p>
+                                </div>
+                            </div>
+                            <div class="roadmap-item">
+                                <span class="roadmap-dot">📌</span>
+                                <div>
+                                    <strong>Q4 2026 – Mobile App</strong>
+                                    <p>App nativo iOS/Android, notificações push</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="about-footer" style="margin-top:2rem;padding-top:1rem;border-top:1px solid var(--m);text-align:center">
+                            <p style="font-size:.85rem;color:var(--m)">
+                                Feito com ❤️ pela comunidade UniverseOS<br>
+                                <strong style="color:var(--p)">O futuro é descentralizado. O futuro é agora.</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ===== PERFIL ===== -->
+            <section id="profile-section" class="section-box hidden">
+                <header class="section-hdr"><h2>👤 Meu Perfil</h2><button id="edit-profile-btn" class="bs" style="font-size:.78rem">Editar</button></header>
+                <div class="profile-edit" id="profile-view">
+                    <div class="cover-upload" id="cover-area">
+                        <img id="cover-img" src="https://placehold.co/800x200/111/4f46e5?text=Capa" alt="Capa"/>
+                        <button class="bs cover-btn">📷 Trocar Capa</button>
+                        <input type="file" id="cover-input" accept="image/*" style="display:none"/>
+                    </div>
+                    <div class="avatar-edit">
+                        <img id="avatar-img" src="https://i.pravatar.cc/100?img=10" alt="Avatar"/>
+                        <input type="file" id="avatar-input" accept="image/*" style="display:none"/>
+                        <div>
+                            <h3 id="prof-name" style="color:var(--p)">@me</h3>
+                            <p id="prof-bio" style="font-size:.82rem;color:var(--m)">Entusiasta Web3</p>
+                        </div>
+                    </div>
+                    <ul style="list-style:none;display:flex;gap:1.5rem;font-size:.82rem;margin-top:.5rem">
+                        <li>Karma: <strong id="prof-karma">0</strong></li>
+                        <li>Tokens: <strong id="prof-tokens">0</strong></li>
+                        <li>Endossos: <strong id="prof-endorse">0</strong></li>
+                    </ul>
+                </div>
+                <!-- EDIT FORM (hidden por padrão) -->
+                <div id="profile-edit-form" class="hidden" style="margin-top:1rem">
+                    <div class="profile-edit">
+                        <div class="trade-row"><label>Nome</label><input type="text" id="edit-name" placeholder="Seu nome"/></div>
+                        <div class="trade-row"><label>Bio</label><textarea id="edit-bio" rows="2" placeholder="Sobre você…"></textarea></div>
+                        <div style="display:flex;gap:.4rem;justify-content:flex-end">
+                            <button id="save-profile" class="bp">Salvar</button>
+                            <button id="cancel-profile" class="bs">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- COLUNA DIREITA -->
+        <div class="right-panel">
+            <section class="section-box">
+                <h3 style="color:var(--acc);font-size:.95rem;margin-bottom:.4rem">💼 Portfólio</h3>
+                <div id="port-list"><p style="font-size:.75rem;color:var(--m)">Portfólio vazio.</p></div>
+            </section>
+            <section class="section-box">
+                <h3 style="color:var(--acc);font-size:.95rem;margin-bottom:.4rem">📜 Histórico</h3>
+                <div id="hist-list" style="max-height:180px;overflow-y:auto"><p style="font-size:.75rem;color:var(--m)">Nenhuma transação.</p></div>
+            </section>
+            <div class="chart-wrap"><canvas id="port-chart"></canvas></div>
+        </div>
+    </div>
+
+    <!-- TERMOS DE USO (modal) -->
+    <div id="terms-modal" class="modal hidden">
+        <div class="modal-box">
+            <div class="modal-hdr"><h2>📜 Termos de Uso</h2><button class="modal-close" id="terms-close">✖</button></div>
+            <div class="terms-content">
+                <h3>1. Aceitação dos Termos</h3>
+                <p>Ao acessar e utilizar a plataforma UniverseOS, você concorda integralmente com estes Termos de Uso. Caso não concorde, por favor, não utilize a plataforma. Estes termos constituem um acordo vinculante entre você e a equipe UniverseOS.</p>
+
+                <h3>2. Descrição do Serviço</h3>
+                <p>O UniverseOS é uma plataforma social descentralizada que combina funcionalidades de rede social, corretora de criptomoedas, marketplace de NFTs, governança DAO, sistema de notícias e inteligência artificial para consultoria de investimentos. Todos os serviços são fornecidos "como estão".</p>
+
+                <h3>3. Elegibilidade</h3>
+                <p>Você deve ter pelo menos 18 anos de idade para utilizar os serviços financeiros da plataforma. Menores de 18 anos podem utilizar apenas as funcionalidades sociais (feed, mensagens, vídeos) com supervisão de um responsável legal.</p>
+
+                <h3>4. Conta e Autenticação</h3>
+                <p>A autenticação na plataforma é realizada via carteira digital (MetaMask ou compatível). Você é responsável pela segurança da sua chave privada e seed phrase. O UniverseOS jamais solicitará sua chave privada.</p>
+
+                <h3>5. Conteúdo do Usuário</h3>
+                <p>Ao publicar conteúdo na plataforma, você declara que possui os direitos autorais ou licença para tal. Conteúdos que violem direitos de terceiros, contenham discurso de ódio, pornografia, incitação à violência ou qualquer material ilegal serão removidos sem aviso prévio.</p>
+
+                <h3>6. Serviços Financeiros e Criptomoedas</h3>
+                <p>Os serviços de corretora, swap, staking e empréstimos são operados via contratos inteligentes na blockchain. O UniverseOS não garante lucros, retornos financeiros ou valorização de ativos. Todo investimento em criptomoedas envolve risco de perda total do capital investido.</p>
+
+                <h3>7. Inteligência Artificial</h3>
+                <p>O consultor de investimentos baseado em IA fornece sugestões informativas e educacionais. As recomendações NÃO constituem aconselhamento financeiro profissional. Consulte um profissional habilitado antes de tomar decisões de investimento.</p>
+
+                <h3>8. NFTs e Marketplace</h3>
+                <p>A compra e venda de NFTs é realizada diretamente entre usuários via contratos inteligentes. O UniverseOS não se responsabiliza pela autenticidade, originalidade ou valor de mercado dos NFTs listados.</p>
+
+                <h3>9. Governança DAO</h3>
+                <p>A participação em votações de governança requer a posse de tokens de governança. Cada voto é registrado de forma imutável na blockchain. O resultado das votações é vinculante para a comunidade.</p>
+
+                <h3>10. Privacidade e Dados</h3>
+                <p>O UniverseOS respeita a privacidade dos usuários. Dados coletados incluem: endereço de carteira, histórico de transações on-chain (público por natureza) e preferências de uso. Não coletamos dados pessoais como nome real, CPF ou endereço residencial, salvo quando fornecidos voluntariamente.</p>
+
+                <h3>11. Cookies e Tecnologias de Rastreamento</h3>
+                <p>Utilizamos cookies para melhorar a experiência do usuário, armazenar preferências e análises de tráfego. Ao aceitar o banner de privacidade, você consente com o uso de cookies conforme descrito nesta seção.</p>
+
+                <h3>12. Propriedade Intelectual</h3>
+                <p>Todo o código-fonte, design, logotipos e marcas do UniverseOS são protegidos por direitos autorais. É proibida a reprodução, modificação ou distribuição sem autorização prévia por escrito.</p>
+
+                <h3>13. Limitação de Responsabilidade</h3>
+                <p>O UniverseOS não se responsabiliza por perdas financeiras decorrentes de: flutuações de mercado, falhas em contratos inteligentes, ataques cibernéticos, erros de terceiros ou qualquer evento fora do controle da plataforma.</p>
+
+                <h3>14. Isenção de Garantias</h3>
+                <p>A plataforma é fornecida "como está" e "conforme disponível", sem garantias de qualquer tipo, expressas ou implícitas, incluindo garantias de comercialização, adequação a um fim específico ou não violação.</p>
+
+                <h3>15. Modificações dos Termos</h3>
+                <p>O UniverseOS reserva-se o direito de modificar estes termos a qualquer momento. Alterações significativas serão comunicadas via notificação na plataforma. O uso continuado após as alterações constitui aceitação dos novos termos.</p>
+
+                <h3>16. Legislação Aplicável</h3>
+                <p>Estes termos são regidos pelas leis da República Federativa do Brasil. Eventuais litígios serão dirimidos no foro da comarca de domicílio do usuário.</p>
+
+                <h3>17. Contato</h3>
+                <p>Para dúvidas, sugestões ou reclamações, entre em contato: contact@universeos.io</p>
+
+                <p style="margin-top:1rem;color:var(--t)"><strong>Última atualização: 08 de Maio de 2026</strong></p>
+            </div>
+            <button id="accept-terms" class="bp" style="width:100%;margin-top:.75rem">Li e Aceito os Termos</button>
+        </div>
+    </div>
+
+    <!-- TRENDS -->
+    <aside id="trends">
+        <h3>🔥 Trends</h3>
+        <ul>
+            <li>#BitcoinHalving</li><li>#EthereumETF</li><li>#Web3Revolution</li>
+            <li>#NFTArt</li><li>#DeFiSummer</li><li>#AIForGood</li>
+        </ul>
+    </aside>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        <div><a href="#" id="footer-terms">Termos</a><a href="#">Privacidade</a><a href="#">Sobre</a><a href="#">Contato</a></div>
+        <p>© 2026 UniverseOS – Todos os direitos reservados</p>
+    </footer>
+
+    <!-- ============================================================
+         JAVASCRIPT COMPLETO
+         ============================================================ -->
+    <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+
+        const $=s=>document.querySelector(s);
+        const $$=s=>[...document.querySelectorAll(s)];
+        const sanitize=s=>s.replace(/[&<>"'`=\/]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'}[c]));
+
+        /* ================================================================
+           PRIVACIDADE BANNER
+           ================================================================ */
+        if(localStorage.getItem('privOK')!=='1'){
+            const b=document.createElement('div');b.id='priv-banner';
+            b.innerHTML=`<p>🔒 Usamos cookies para melhorar sua experiência. <button class="bp" id="priv-ok" style="margin-left:.5rem;font-size:.78rem">Aceitar</button></p>`;
+            document.body.appendChild(b);
+            $('#priv-ok').onclick=()=>{localStorage.setItem('privOK','1');b.remove()};
+        }
+
+        /* ================================================================
+           TERMOS DE USO
+           ================================================================ */
+        $('#terms-btn').onclick=()=>$('#terms-modal').classList.remove('hidden');
+        $('#terms-close').onclick=()=>$('#terms-modal').classList.add('hidden');
+        $('#accept-terms').onclick=()=>{localStorage.setItem('termsAccepted','1');$('#terms-modal').classList.add('hidden');alert('Termos aceitos!')};
+        $('#footer-terms').onclick=e=>{e.preventDefault();$('#terms-modal').classList.remove('hidden')};
+
+        /* ================================================================
+           NAVEGAÇÃO
+           ================================================================ */
+        const sections={
+            feed:$('#feed-section'),shorts:$('#shorts-section'),messages:$('#messages-section'),
+            news:$('#news-section'),exchange:$('#exchange-section'),search:$('#search-section'),
+            ai:$('#ai-section'),marketplace:$('#marketplace-section'),governance:$('#gov-modal'),
+            profile:$('#profile-section')
+        };
+        const showTab=t=>{
+            Object.entries(sections).forEach(([k,el])=>{if(el)el.classList.toggle('hidden',k!==t)});
+            $$('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.tab===t));
+            const titles={feed:'Feed',shorts:'Shorts',messages:'Chat',news:'Notícias',exchange:'Corretora',search:'Buscar',ai:'IA Invest',marketplace:'NFTs',governance:'Governança',profile:'Perfil'};
+            document.title=`UniverseOS – ${titles[t]||'Web3'}`;
+            if(t==='news')fetchNews();
+            if(t==='exchange'&&!allCoins.length)fetchCoins();
+        };
+        $$('[data-tab]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab(a.dataset.tab)}));
+        $('#gov-close').onclick=()=>$('#gov-modal').classList.add('hidden');
+
+        /* ================================================================
+           METAMASK
+           ================================================================ */
+        let provider,signer;window.currentAccount=null;
+        const abiToken=['function balanceOf(address) view returns (uint256)','function transfer(address,uint256) returns (bool)'];
+        const tokenAddr='0x0000000000000000000000000000000000000001';
+        let tokenContract=null;
+
+        $('#connect-wallet').onclick=async()=>{
+            if(!window.ethereum){alert('Instale a MetaMask.');return}
+            try{
+                provider=new ethers.providers.Web3Provider(window.ethereum,'any');
+                await provider.send('eth_requestAccounts',[]);
+                signer=provider.getSigner();
+                window.currentAccount=await signer.getAddress();
+                tokenContract=new ethers.Contract(tokenAddr,abiToken,signer);
+                $('#wallet-addr').textContent=window.currentAccount.slice(0,6)+'…'+window.currentAccount.slice(-4);
+                try{const b=await provider.getBalance(window.currentAccount);$('#wallet-bal').textContent=parseFloat(ethers.utils.formatEther(b)).toFixed(4)+' ETH';}catch(_){$('#wallet-bal').textContent='Conectado'}
+                $('#wallet-status').classList.remove('hidden');$('#connect-wallet').classList.add('hidden');
+                $('#prof-name').textContent='@'+window.currentAccount.slice(0,8);
+            }catch(e){console.error(e);alert('Falha na conexão.')}
+        };
+
+        /* ================================================================
+           FEED – POSTAGEM COM VÍDEO/IMAGEM
+           ================================================================ */
+        const feed=$('#feed-container');
+        let postId=0,userKarma=0;
+        let pendingFile=null;
+
+        // Upload zone
+        const uploadZone=$('#upload-zone');
+        const fileInput=$('#file-input');
+        const uploadPreview=$('#upload-preview');
+
+        uploadZone.onclick=()=>fileInput.click();
+        uploadZone.ondragover=e=>{e.preventDefault();uploadZone.style.borderColor='var(--p)'};
+        uploadZone.ondragleave=()=>uploadZone.style.borderColor='var(--m)';
+        uploadZone.ondrop=e=>{e.preventDefault();uploadZone.style.borderColor='var(--m)';handleFile(e.dataTransfer.files[0])};
+        fileInput.onchange=e=>handleFile(e.target.files[0]);
+
+        const handleFile=file=>{
+            if(!file)return;
+            pendingFile=file;
+            const url=URL.createObjectURL(file);
+            if(file.type.startsWith('video')){
+                uploadPreview.innerHTML=`<video src="${url}" controls style="max-height:180px;border-radius:var(--r)"></video>`;
+            }else{
+                uploadPreview.innerHTML=`<img src="${url}" style="max-height:180px;border-radius:var(--r)"/>`;
+            }
+        };
+
+        const renderPost=({id,username,avatar,text,media,timestamp})=>{
+            const a=document.createElement('article');a.className='post';a.dataset.postId=id;
+            a.innerHTML=`
+                <div class="post-hdr">
+                    <img src="${avatar}" alt="" class="post-av"/>
+                    <div class="post-uinfo"><span class="post-un">@${username}</span><br><span class="post-ts">${timestamp}</span></div>
+                    <button class="post-opt">⋮</button>
+                </div>
+                <div class="post-body">
+                    <p class="post-txt">${sanitize(text)}</p>
+                    ${media?`<div class="post-media">${media}</div>`:''}
+                </div>
+                <div class="post-ft">
+                    <button data-act="like">👍 <span>0</span></button>
+                    <button data-act="comment">💬 <span>0</span></button>
+                    <button data-act="share">🔗 Share</button>
+                    <button data-act="endorse">✅ Endosso</button>
+                </div>`;
+            feed.prepend(a);
+        };
+
+        feed.addEventListener('click',e=>{
+            const b=e.target.closest('[data-act]');if(!b)return;
+            const act=b.dataset.act,p=b.closest('.post');
+            if(act==='like'){b.querySelector('span').textContent=+b.querySelector('span').textContent+1;userKarma++;$('#prof-karma').textContent=userKarma}
+            if(act==='comment'){const c=prompt('Comentário:');if(c)b.querySelector('span').textContent=+b.querySelector('span').textContent+1}
+            if(act==='share'){navigator.clipboard.writeText(location.href+'#p-'+p.dataset.postId);alert('Link copiado!')}
+            if(act==='endorse'){$('#prof-endorse').textContent=+$('#prof-endorse').textContent+1;alert('Endosso registrado!')}
+        });
+
+        const parseCmd=t=>{const m=t.trim().match(/^\/(\S+)\s+(.+)/);return m?{cmd:m[1].toLowerCase(),args:m[2].trim()}:null};
+
+        $('#post-btn').onclick=()=>{
+            const raw=$('#post-input').value.trim();
+            const cmd=parseCmd(raw);
+            let mediaHTML='';
+
+            if(pendingFile){
+                const url=URL.createObjectURL(pendingFile);
+                if(pendingFile.type.startsWith('video')){
+                    mediaHTML=`<video src="${url}" controls style="width:100%;border-radius:var(--r)"></video>`;
+                }else{
+                    mediaHTML=`<img src="${url}" style="width:100%;border-radius:var(--r)"/>`;
+                }
+            }
+
+            if(cmd&&cmd.cmd==='eai-boy'){
+                const vid=(()=>{try{const u=new URL(cmd.args);if(u.hostname.includes('youtu.be'))return u.pathname.slice(1);if(u.searchParams.has('v'))return u.searchParams.get('v');return u.pathname.split('/').pop()}catch(_){return cmd.args}})();
+                mediaHTML=`<iframe width="100%" height="280" src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen style="border-radius:var(--r)"></iframe>`;
+            }
+
+            if(!raw&&!pendingFile)return;
+
+            renderPost({id:++postId,username:window.currentAccount?window.currentAccount.slice(0,8):'anon',avatar:'https://i.pravatar.cc/42?img=10',text:raw.startsWith('/')?'':raw,media:mediaHTML,timestamp:new Date().toLocaleTimeString('pt-BR')});
+            $('#post-input').value='';pendingFile=null;uploadPreview.innerHTML='';
+        };
+
+        /* ================================================================
+           SHORTS – VÍDEOS CURTOS
+           ================================================================ */
+        const shortsContainer=$('#shorts-container');
+        const shortsStore=[];
+
+        const renderShorts=()=>{
+            shortsContainer.innerHTML='';
+            shortsStore.forEach((s,i)=>{
+                const d=document.createElement('div');d.className='short-card';
+                d.innerHTML=`<video src="${s.url}" loop muted playsinline></video><div class="short-info">@${s.user} • ${s.views} views</div>`;
+                d.querySelector('video').onclick=function(){this.paused?this.play():this.pause()};
+                // auto-play on hover
+                d.onmouseenter=()=>d.querySelector('video').play();
+                d.onmouseleave=()=>{const v=d.querySelector('video');v.pause();v.currentTime=0};
+                shortsContainer.appendChild(d);
+            });
+        };
+
+        // demo shorts
+        for(let i=1;i<=6;i++){
+            shortsStore.push({url:`https://www.w3schools.com/html/mov_bbb.mp4`,user:`user${i}`,views:Math.floor(Math.random()*10000)});
+        }
+        renderShorts();
+
+        $('#upload-short-btn').onclick=()=>{
+            const inp=document.createElement('input');inp.type='file';inp.accept='video/*';
+            inp.onchange=e=>{
+                const f=e.target.files[0];if(!f)return;
+                shortsStore.unshift({url:URL.createObjectURL(f),user:window.currentAccount?window.currentAccount.slice(0,8):'anon',views:0});
+                renderShorts();
+            };
+            inp.click();
+        };
+
+        /* ================================================================
+           MENSAGENS
+           ================================================================ */
+        const contacts=[
+            {id:1,name:'@alice',avatar:'https://i.pravatar.cc/40?img=11'},
+            {id:2,name:'@bob',avatar:'https://i.pravatar.cc/40?img=12'},
+            {id:3,name:'@charlie',avatar:'https://i.pravatar.cc/40?img=13'},
+            {id:4,name:'@diana',avatar:'https://i.pravatar.cc/40?img=14'},
+            {id:5,name:'@eth_dev',avatar:'https://i.pravatar.cc/40?img=15'}
+        ];
+        const msgStore={};
+        contacts.forEach(c=>{msgStore[c.id]=[{from:'them',text:`Olá! Sou ${c.name}`},{from:'me',text:'Oi! Tudo bem?'}]});
+        let activeContact=null;
+
+        const renderContacts=()=>{
+            const el=$('#msg-contacts');el.innerHTML='';
+            contacts.forEach(c=>{
+                const d=document.createElement('div');d.className='msg-contact'+(activeContact===c.id?' active':'');
+                d.innerHTML=`<img src="${c.avatar}"/><span>${c.name}</span>`;
+                d.onclick=()=>{activeContact=c.id;renderContacts();renderMessages()};
+                el.appendChild(d);
+            });
+        };
+
+        const renderMessages=()=>{
+            if(!activeContact)return;
+            const c=contacts.find(x=>x.id===activeContact);
+            $('#msg-hdr').textContent=c.name;
+            const body=$('#msg-body');body.innerHTML='';
+            (msgStore[activeContact]||[]).forEach(m=>{
+                const d=document.createElement('div');
+                d.className=`msg-bubble ${m.from==='me'?'msg-sent':'msg-recv'}`;
+                d.textContent=m.text;body.appendChild(d);
+            });
+            body.scrollTop=body.scrollHeight;
+        };
+
+        $('#msg-send').onclick=()=>{
+            if(!activeContact)return;
+            const txt=$('#msg-input').value.trim();if(!txt)return;
+            msgStore[activeContact].push({from:'me',text:txt});
+            // fake reply
+            setTimeout(()=>{
+                msgStore[activeContact].push({from:'them',text:'Interessante! Me conte mais 😊'});
+                renderMessages();
+            },1000);
+            $('#msg-input').value='';renderMessages();
+        };
+        $('#msg-input').onkeydown=e=>{if(e.key==='Enter')$('#msg-send').click()};
+        renderContacts();
+
+        /* ================================================================
+           NOTÍCIAS – API REAL (NewsData.io)
+           ================================================================ */
+        const NEWS_API_KEY='pub_12345678901234567890'; // substitua pela sua chave
+        const fetchNews=async()=>{
+            const cat=$('#news-category').value;
+            const grid=$('#news-grid');
+            grid.innerHTML='<p style="color:var(--m);font-size:.82rem;animation:pulse 1s infinite">Carregando notícias…</p>';
+            try{
+                const r=await fetch(`https://newsdata.io/api/1/latest?apikey=${NEWS_API_KEY}&language=pt&category=${cat}`);
+                if(!r.ok)throw new Error(r.status);
+                const d=await r.json();
+                grid.innerHTML='';
+                if(!d.results||!d.results.length){grid.innerHTML='<p style="color:var(--m)">Nenhuma notícia encontrada.</p>';return}
+                d.results.forEach(n=>{
+                    const card=document.createElement('div');card.className='news-card';
+                    card.innerHTML=`
+                        <img src="${n.image_url||'https://placehold.co/400x200/111/4f46e5?text=News'}" alt="" onerror="this.src='https://placehold.co/400x200/111/4f46e5?text=News'"/>
+                        <div class="news-body">
+                            <h4>${sanitize(n.title||'')}</h4>
+                            <p>${sanitize((n.description||'').slice(0,120))}…</p>
+                            <div class="news-src">${sanitize(n.source_name||'')} • ${n.pubDate||''}</div>
+                        </div>`;
+                    card.onclick=()=>window.open(n.link,'_blank');
+                    grid.appendChild(card);
+                });
+            }catch(e){
+                console.error('News API error:',e);
+                grid.innerHTML='<p style="color:var(--err)">Erro ao carregar notícias. Verifique a chave API.</p>';
+            }
+        };
+        $('#news-category').onchange=fetchNews;
+
+        /* ================================================================
+           CORRETORA – COINGECKO API
+           ================================================================ */
+        const COINS_API='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=1h,24h,7d';
+        const CHART_API=id=>`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=7`;
+
+        let allCoins=[];let selectedCoin=null;let tradeMode='buy';
+        let coinChartInst=null;const portfolio={};const tradeHistory=[];
+
+        const fetchCoins=async()=>{
+            try{
+                const r=await fetch(COINS_API);if(!r.ok)throw new Error(r.status);
+                allCoins=await r.json();renderCoins(allCoins);
+            }catch(e){console.error(e);$('#coin-grid').innerHTML='<p style="color:var(--err)">Erro ao buscar preços.</p>'}
+        };
+
+        const renderCoins=list=>{
+            const g=$('#coin-grid');g.innerHTML='';
+            list.forEach(c=>{
+                const ch=c.price_change_percentage_24h||0;
+                const d=document.createElement('div');d.className='coin-card';d.dataset.coinId=c.id;
+                d.innerHTML=`
+                    <img src="${c.image}" class="coin-icon" alt=""/>
+                    <div class="coin-info"><div class="coin-name">${c.name}</div><div class="coin-sym">${c.symbol}</div></div>
+                    <div style="text-align:right">
+                        <div class="coin-price">$${c.current_price.toLocaleString('en-US',{minimumFractionDigits:2})}</div>
+                        <div class="coin-change ${ch>=0?'up':'down'}">${ch>=0?'+':''}${ch.toFixed(2)}%</div>
+                    </div>`;
+                d.onclick=()=>selectCoin(c);g.appendChild(d);
+            });
+        };
+
+        $('#crypto-search').oninput=e=>{
+            const q=e.target.value.toLowerCase();
+            renderCoins(allCoins.filter(c=>c.name.toLowerCase().includes(q)||c.symbol.toLowerCase().includes(q)));
+        };
+
+        const selectCoin=async c=>{
+            selectedCoin=c;
+            $$('.coin-card').forEach(el=>el.classList.toggle('selected',el.dataset.coinId===c.id));
+            $('#trade-coin-name').textContent=`${c.name} (${c.symbol.toUpperCase()})`;
+            $('#trade-price').value=c.current_price.toFixed(2);
+            $('#trade-qty').value='';$('#trade-total').textContent='0.00';
+            try{
+                const r=await fetch(CHART_API(c.id));if(!r.ok)throw new Error(r.status);
+                const data=await r.json();
+                const labels=data.prices.map(p=>new Date(p[0]).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}));
+                const prices=data.prices.map(p=>p[1]);
+                if(coinChartInst)coinChartInst.destroy();
+                coinChartInst=new Chart($('#coin-chart').getContext('2d'),{
+                    type:'line',
+                    data:{labels,datasets:[{label:`${c.name} (USD)`,data:prices,borderColor:'#4f46e5',backgroundColor:'rgba(79,70,229,.1)',fill:true,tension:.3,pointRadius:0}]},
+                    options:{responsive:true,plugins:{legend:{labels:{color:'#e0e0e0'}}},scales:{x:{ticks:{color:'#6b7280',maxTicksLimit:7}},y:{ticks:{color:'#6b7280'}}}}
+                });
+            }catch(e){console.error(e)}
+        };
+
+        $('#tab-buy').onclick=()=>{tradeMode='buy';$('#tab-buy').className='trade-tab buy-active';$('#tab-sell').className='trade-tab';$('#exec-trade').textContent='Comprar';$('#exec-trade').className='bp'};
+        $('#tab-sell').onclick=()=>{tradeMode='sell';$('#tab-sell').className='trade-tab sell-active';$('#tab-buy').className='trade-tab';$('#exec-trade').textContent='Vender';$('#exec-trade').className='bdanger'};
+        $('#trade-qty').oninput=()=>{const p=parseFloat($('#trade-price').value)||0;const q=parseFloat($('#trade-qty').value)||0;$('#trade-total').textContent=(p*q).toFixed(2)};
+
+        $('#exec-trade').onclick=()=>{
+            if(!selectedCoin){alert('Selecione uma moeda.');return}
+            const qty=parseFloat($('#trade-qty').value);
+            if(!qty||qty<=0){alert('Informe a quantidade.');return}
+            const price=selectedCoin.current_price;const total=price*qty;
+            if(tradeMode==='buy'){
+                if(!portfolio[selectedCoin.id])portfolio[selectedCoin.id]={name:selectedCoin.name,symbol:selectedCoin.symbol,image:selectedCoin.image,qty:0,avgPrice:0};
+                const p=portfolio[selectedCoin.id];const prev=p.qty*p.avgPrice;p.qty+=qty;p.avgPrice=(prev+total)/p.qty;
+            }else{
+                if(!portfolio[selectedCoin.id]||portfolio[selectedCoin.id].qty<qty){alert('Saldo insuficiente.');return}
+                portfolio[selectedCoin.id].qty-=qty;if(portfolio[selectedCoin.id].qty<=0)delete portfolio[selectedCoin.id];
+            }
+            tradeHistory.unshift({type:tradeMode,coin:selectedCoin.symbol.toUpperCase(),qty,price,total,date:new Date().toLocaleString('pt-BR')});
+            renderPortfolio();renderHistory();renderPortChart();
+            alert(`${tradeMode==='buy'?'Compra':'Venda'} de ${qty} ${selectedCoin.symbol.toUpperCase()} a $${total.toFixed(2)}`);
+            $('#trade-qty').value='';$('#trade-total').textContent='0.00';
+        };
+
+        const renderPortfolio=()=>{
+            const el=$('#port-list');const keys=Object.keys(portfolio);
+            if(!keys.length){el.innerHTML='<p style="font-size:.75rem;color:var(--m)">Portfólio vazio.</p>';return}
+            el.innerHTML='';
+            keys.forEach(k=>{
+                const c=portfolio[k];const coin=allCoins.find(x=>x.id===k);const cur=coin?coin.current_price:c.avgPrice;
+                const d=document.createElement('div');d.className='port-item';
+                d.innerHTML=`<div class="port-coin"><img src="${c.image}"/>${c.symbol.toUpperCase()}</div><div>${c.qty.toFixed(4)}</div><div class="port-val">$${(c.qty*cur).toFixed(2)}</div>`;
+                el.appendChild(d);
+            });
+        };
+
+        const renderHistory=()=>{
+            const el=$('#hist-list');
+            if(!tradeHistory.length){el.innerHTML='<p style="font-size:.75rem;color:var(--m)">Nenhuma transação.</p>';return}
+            el.innerHTML='';
+            tradeHistory.slice(0,20).forEach(h=>{
+                const d=document.createElement('div');d.className='hist-item';
+                d.innerHTML=`<span class="hist-type ${h.type}">${h.type==='buy'?'COMPRA':'VENDA'}</span><span>${h.qty.toFixed(4)} ${h.coin}</span><span>$${h.total.toFixed(2)}</span><span style="color:var(--m)">${h.date}</span>`;
+                el.appendChild(d);
+            });
+        };
+
+        let portChartInst=null;
+        const renderPortChart=()=>{
+            const keys=Object.keys(portfolio);if(!keys.length)return;
+            if(portChartInst)portChartInst.destroy();
+            const labels=keys.map(k=>portfolio[k].symbol.toUpperCase());
+            const data=keys.map(k=>{const c=portfolio[k];const coin=allCoins.find(x=>x.id===k);return c.qty*(coin?coin.current_price:c.avgPrice)});
+            const colors=['#4f46e5','#10b981','#fbbf24','#ef4444','#8b5cf6','#ec4899','#06b6d4','#f97316'];
+            portChartInst=new Chart($('#port-chart').getContext('2d'),{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors.slice(0,labels.length)}]},options:{responsive:true,plugins:{legend:{labels:{color:'#e0e0e0'}}}}});
+        };
+
+        setInterval(async()=>{
+            try{const r=await fetch(COINS_API);if(!r.ok)return;allCoins=await r.json();renderCoins(allCoins);if(selectedCoin){const u=allCoins.find(c=>c.id===selectedCoin.id);if(u){selectedCoin=u;$('#trade-price').value=u.current_price.toFixed(2)}}renderPortfolio()}catch(_){}
+        },60000);
+
+        /* ================================================================
+           BUSCA NA INTERNET (Google Custom Search placeholder)
+           ================================================================ */
+        const SEARCH_API_KEY='YOUR_GOOGLE_CUSTOM_SEARCH_KEY';
+        const SEARCH_CX='YOUR_SEARCH_ENGINE_ID';
+
+        $('#search-btn').onclick=async()=>{
+            const q=$('#search-input').value.trim();if(!q)return;
+            const el=$('#search-results');
+            el.innerHTML='<p style="color:var(--m);animation:pulse 1s infinite">Buscando…</p>';
+            try{
+                const r=await fetch(`https://www.googleapis.com/customsearch/v1?key=${SEARCH_API_KEY}&cx=${SEARCH_CX}&q=${encodeURIComponent(q)}`);
+                if(!r.ok)throw new Error(r.status);
+                const d=await r.json();el.innerHTML='';
+                if(!d.items||!d.items.length){el.innerHTML='<p style="color:var(--m)">Nenhum resultado.</p>';return}
+                d.items.forEach(item=>{
+                    const div=document.createElement('div');div.className='search-result';
+                    div.innerHTML=`<h4>${sanitize(item.title)}</h4><p>${sanitize(item.snippet||'')}</p><a href="${item.link}" target="_blank">${item.displayLink}</a>`;
+                    el.appendChild(div);
+                });
+            }catch(e){
+                console.error(e);
+                // Fallback: abre Google diretamente
+                el.innerHTML=`<p style="color:var(--m)">API indisponível. <a href="https://www.google.com/search?q=${encodeURIComponent(q)}" target="_blank" style="color:var(--p)">Buscar no Google →</a></p>`;
+            }
+        };
+        $('#search-input').onkeydown=e=>{if(e.key==='Enter')$('#search-btn').click()};
+
+        /* ================================================================
+           IA – CONSULTOR DE INVESTIMENTOS (Gemini API)
+           ================================================================ */
+        const AI_API_KEY='YOUR_GEMINI_API_KEY';
+        const AI_ENDPOINT=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${AI_API_KEY}`;
+
+        const aiChat=$('#ai-chat');
+        const aiMessages=[];
+
+        const addAiMsg=(role,text)=>{
+            const d=document.createElement('div');
+            d.className=`ai-msg ${role==='user'?'ai-user':'ai-bot'}`;
+            d.textContent=text;aiChat.appendChild(d);aiChat.scrollTop=aiChat.scrollHeight;
+        };
+
+        // Mensagem de boas-vindas
+        addAiMsg('bot','👋 Olá! Sou o consultor de investimentos IA do UniverseOS. Pergunte-me sobre qualquer criptomoeda e darei minha análise baseada em dados de mercado. Lembre-se: isso NÃO é aconselhamento financeiro profissional.');
+
+        $('#ai-send').onclick=async()=>{
+            const q=$('#ai-input').value.trim();if(!q)return;
+            addAiMsg('user',q);$('#ai-input').value='';
+
+            // Preparar contexto com preços atuais
+            const top10=allCoins.slice(0,10).map(c=>`${c.name}(${c.symbol}): $${c.current_price} (24h: ${(c.price_change_percentage_24h||0).toFixed(2)}%)`).join(', ');
+
+            const systemPrompt=`Você é um consultor de investimentos em criptomoedas. Responda em português de forma clara e objetiva. Use os dados de mercado atuais: ${top10}. Sempre inclua aviso de que isso não é aconselhamento financeiro. Analise tendências, suporte/resistência e fundamentos quando relevante.`;
+
+            try{
+                const r=await fetch(AI_ENDPOINT,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({
+                        contents:[{parts:[{text:systemPrompt+'\n\nPergunta do usuário: '+q}]}],
+                        generationConfig:{temperature:0.7,maxOutputTokens:800}
+                    })
+                });
+                if(!r.ok)throw new Error(r.status);
+                const d=await r.json();
+                const answer=d.candidates?.[0]?.content?.parts?.[0]?.text||'Desculpe, não consegui processar sua pergunta.';
+                addAiMsg('bot',answer);
+            }catch(e){
+                console.error(e);
+                // Fallback local
+                const fallback=generateLocalAdvice(q);
+                addAiMsg('bot',fallback);
+            }
+        };
+        $('#ai-input').onkeydown=e=>{if(e.key==='Enter')$('#ai-send').click()};
+
+        // Fallback de IA local (quando API não disponível)
+        const generateLocalAdvice=q=>{
+            const ql=q.toLowerCase();
+            const top5=allCoins.slice(0,5);
+            if(ql.includes('melhor')&&(ql.includes('invest')||ql.includes('comprar'))){
+                const best=top5.reduce((a,b)=>(b.price_change_percentage_24h||0)>(a.price_change_percentage_24h||0)?b:a);
+                return `📊 Com base nos dados atuais, ${best.name} (${best.symbol.toUpperCase()}) está com a melhor performance nas últimas 24h (${(best.price_change_percentage_24h||0).toFixed(2)}%). Preço atual: $${best.current_price.toLocaleString()}.\n\n⚠️ AVISO: Esta análise é baseada apenas em dados recentes e NÃO constitui aconselhamento financeiro. Faça sua própria pesquisa (DYOR).`;
+            }
+            if(ql.includes('bitcoin')||ql.includes('btc')){
+                const btc=allCoins.find(c=>c.symbol==='btc');
+                if(btc)return `₿ Bitcoin está a $${btc.current_price.toLocaleString()} (24h: ${(btc.price_change_percentage_24h||0).toFixed(2)}%). Market Cap: $${(btc.market_cap/1e9).toFixed(1)}B.\n\n⚠️ NÃO é aconselhamento financeiro.`;
+            }
+            if(ql.includes('ethereum')||ql.includes('eth')){
+                const eth=allCoins.find(c=>c.symbol==='eth');
+                if(eth)return `⟠ Ethereum está a $${eth.current_price.toLocaleString()} (24h: ${(eth.price_change_percentage_24h||0).toFixed(2)}%). Market Cap: $${(eth.market_cap/1e9).toFixed(1)}B.\n\n⚠️ NÃO é aconselhamento financeiro.`;
+            }
+            return `📊 Top 5 criptos por market cap:\n${top5.map((c,i)=>`${i+1}. ${c.name}: $${c.current_price.toLocaleString()} (${(c.price_change_percentage_24h||0).toFixed(2)}%)`).join('\n')}\n\n⚠️ Isso NÃO é aconselhamento financeiro. Sempre faça sua própria pesquisa.`;
+        };
+
+        /* ================================================================
+           PERFIL – EDIÇÃO
+           ================================================================ */
+        const coverArea=$('#cover-area');
+        const coverInput=$('#cover-input');
+        const avatarImg=$('#avatar-img');
+        const avatarInput=$('#avatar-input');
+
+        coverArea.querySelector('.cover-btn').onclick=e=>{e.stopPropagation();coverInput.click()};
+        coverInput.onchange=e=>{const f=e.target.files[0];if(f)$('#cover-img').src=URL.createObjectURL(f)};
+        avatarImg.onclick=()=>avatarInput.click();
+        avatarInput.onchange=e=>{const f=e.target.files[0];if(f)avatarImg.src=URL.createObjectURL(f)};
+
+        $('#edit-profile-btn').onclick=()=>{
+            $('#profile-edit-form').classList.toggle('hidden');
+            $('#edit-name').value=$('#prof-name').textContent;
+            $('#edit-bio').value=$('#prof-bio').textContent;
+        };
+        $('#save-profile').onclick=()=>{
+            const name=$('#edit-name').value.trim();
+            const bio=$('#edit-bio').value.trim();
+            if(name)$('#prof-name').textContent=name;
+            if(bio)$('#prof-bio').textContent=bio;
+            $('#profile-edit-form').classList.add('hidden');
+            alert('Perfil atualizado!');
+        };
+        $('#cancel-profile').onclick=()=>$('#profile-edit-form').classList.add('hidden');
+
+        /* ================================================================
+           GOVERNANÇA
+           ================================================================ */
+        $('#gov-form').onsubmit=e=>{
+            e.preventDefault();
+            const vote=document.querySelector('input[name="vote"]:checked');
+            if(!vote){alert('Selecione uma opção.');return}
+            alert(`Voto "${vote.value}" registrado na Proposta ${$('#prop-sel').value}!`);
+            $('#gov-modal').classList.add('hidden');
+        };
+
+        /* ================================================================
+           CAPTURA DE ERROS
+           ================================================================ */
+        window.addEventListener('error',e=>console.error('Error:',e.message));
+        window.addEventListener('unhandledrejection',e=>console.error('Promise:',e.reason));
+
+        /* ================================================================
+           INICIALIZAÇÃO
+           ================================================================ */
+        showTab('feed');
+
+    }); 
+    
+    
+
+
+        /* ================================================================
+           NOTIFICAÇÕES EM TEMPO REAL
+           ================================================================ */
+        const notifStore = [];
+        const notifBell = document.createElement('button');
+        notifBell.id = 'notif-bell';
+        notifBell.className = 'bs';
+        notifBell.style.cssText = 'position:relative;font-size:1.1rem;padding:.4rem .6rem';
+        notifBell.innerHTML = '🔔 <span id="notif-count" style="position:absolute;top:-4px;right:-4px;background:var(--err);color:#fff;font-size:.6rem;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center">0</span>';
+        document.querySelector('#navbar .nav-links').parentElement.appendChild(notifBell);
+
+        const notifPanel = document.createElement('div');
+        notifPanel.id = 'notif-panel';
+        notifPanel.style.cssText = `
+            position:fixed;top:3.75rem;right:1rem;width:300px;max-height:400px;
+            background:var(--g1);backdrop-filter:blur(12px);border-radius:var(--r);
+            box-shadow:var(--sh);z-index:1500;overflow-y:auto;display:none;padding:.75rem;
+        `;
+        notifPanel.innerHTML = '<h4 style="color:var(--p);margin-bottom:.5rem;font-size:.9rem">🔔 Notificações</h4><div id="notif-list"></div>';
+        document.body.appendChild(notifPanel);
+
+        notifBell.onclick = () => {
+            notifPanel.style.display = notifPanel.style.display === 'none' ? 'block' : 'none';
+        };
+
+        const addNotification = (text, type = 'info') => {
+            const colors = { info: 'var(--p)', success: 'var(--ok)', warning: 'var(--acc)', error: 'var(--err)' };
+            const icons = { info: 'ℹ️', success: '✅', warning: '⚠️', error: '❌' };
+            const notif = {
+                id: Date.now(),
+                text,
+                type,
+                time: new Date().toLocaleTimeString('pt-BR'),
+                read: false
+            };
+            notifStore.unshift(notif);
+            renderNotifications();
+
+            // Toast visual
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position:fixed;top:4.5rem;right:1rem;background:${colors[type]};
+                color:#fff;padding:.6rem 1rem;border-radius:var(--r);font-size:.82rem;
+                z-index:3000;animation:fadeIn .3s ease-out;max-width:300px;
+            `;
+            toast.textContent = `${icons[type]} ${text}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        };
+
+        const renderNotifications = () => {
+            const list = $('#notif-list');
+            const unread = notifStore.filter(n => !n.read).length;
+            $('#notif-count').textContent = unread;
+            list.innerHTML = '';
+            if (!notifStore.length) {
+                list.innerHTML = '<p style="font-size:.78rem;color:var(--m)">Nenhuma notificação.</p>';
+                return;
+            }
+            notifStore.slice(0, 30).forEach(n => {
+                const d = document.createElement('div');
+                d.style.cssText = `
+                    padding:.4rem .5rem;margin-bottom:.3rem;background:${n.read ? 'transparent' : 'var(--g2)'};
+                    border-radius:var(--r);font-size:.78rem;cursor:pointer;transition:var(--tr);
+                `;
+                d.innerHTML = `<span style="color:var(--t)">${n.text}</span><br><span style="font-size:.65rem;color:var(--m)">${n.time}</span>`;
+                d.onclick = () => { n.read = true; renderNotifications(); };
+                list.appendChild(d);
+            });
+        };
+
+        // Notificações automáticas de preço
+        setInterval(() => {
+            if (allCoins.length) {
+                const random = allCoins[Math.floor(Math.random() * Math.min(10, allCoins.length))];
+                const ch = random.price_change_percentage_24h || 0;
+                if (Math.abs(ch) > 3) {
+                    addNotification(
+                        `${random.name} ${ch > 0 ? '📈' : '📉'} ${ch.toFixed(2)}% nas últimas 24h ($${random.current_price.toLocaleString()})`,
+                        ch > 0 ? 'success' : 'warning'
+                    );
+                }
+            }
+        }, 45000);
+        /* ================================================================
+           SISTEMA DE ARTIGOS VIA .TXT
+           ================================================================ */
+        (() => {
+            // Armazenamento
+            const STORAGE_KEY = 'universe_articles';
+            let articles = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+            // Referências DOM
+            const articleFileInput = $('#article-file-input');
+            const previewArea = $('#article-preview-area');
+            const previewContent = $('#article-preview-content');
+            const articlesContainer = $('#articles-container');
+            let rawTxtContent = '';
+
+            // Adicionar aba "Artigos" na navbar
+            const artTab = document.createElement('li');
+            artTab.innerHTML = '<a href="#" data-tab="articles">Artigos</a>';
+            document.querySelector('.nav-links').appendChild(artTab);
+
+            // Registrar seção
+            sections.articles = $('#articles-section');
+            artTab.querySelector('a').addEventListener('click', e => {
+                e.preventDefault();
+                showTab('articles');
+                renderArticles();
+            });
+
+            // -------------------- PARSER DE .TXT --------------------
+
+            /**
+             * Converte texto puro em HTML formatado.
+             * Detecta automaticamente:
+             * - Títulos (linhas MAIÚSCULAS ou que começam com # ## ###)
+             * - Parágrafos (separados por linha vazia)
+             * - Listas (linhas que começam com - ou * ou número.)
+             * - Citações (linhas que começam com >)
+             * - Código (entre ``` ```)
+             * - Links (http:// ou https://)
+             * - Negrito (**texto**) e itálico (*texto*)
+             * - Separadores (--- ou ___)
+             */
+            const parseTxt = raw => {
+                const lines = raw.split('\n');
+                let html = '';
+                let inCodeBlock = false;
+                let inList = false;
+                let listType = '';
+
+                for (let i = 0; i < lines.length; i++) {
+                    let line = lines[i];
+
+                    // Blocos de código
+                    if (line.trim().startsWith('```')) {
+                        if (inCodeBlock) {
+                            html += '</code></pre>';
+                            inCodeBlock = false;
+                        } else {
+                            if (inList) { html += `</${listType}>`; inList = false; }
+                            html += '<pre><code>';
+                            inCodeBlock = true;
+                        }
+                        continue;
+                    }
+                    if (inCodeBlock) {
+                        html += sanitize(line) + '\n';
+                        continue;
+                    }
+
+                    // Linha vazia = fechar lista se aberta
+                    if (!line.trim()) {
+                        if (inList) { html += `</${listType}>`; inList = false; }
+                        continue;
+                    }
+
+                    // Separador ---
+                    if (/^[-_]{3,}$/.test(line.trim())) {
+                        if (inList) { html += `</${listType}>`; inList = false; }
+                        html += '<hr/>';
+                        continue;
+                    }
+
+                    // Títulos com #
+                    if (line.startsWith('### ')) {
+                        if (inList) { html += `</${listType}>`; inList = false; }
+                        html += `<h3>${formatInline(line.slice(4))}</h3>`;
+                        continue;
+                    }
+                    if (line.startsWith('## ')) {
+                        if (inList) { html += `</${listType}>`; inList = false; }
+                        html += `<h2>${formatInline(line.slice(3))}</h2>`;
+                        continue;
+                    }
+                    if (line.startsWith('# ')) {
+                        if (inList) { html += `</${listType}>`; inList = false; }
+                        html += `<h1>${formatInline(line.slice(2))}</h1>`;
+                        continue;
+                    }
+
+                    // Títulos por MAIÚSCULAS (linha inteira em caps e > 3 chars)
+                    if (line.trim().length > 3 && line.trim() === line.trim().toUpperCase() && /[A-ZÀ-Ú]/.test(line)) {
+                        if (inList) { html += `</${listType}>`; inList = false; }
+                        html += `<h2>${formatInline(line.trim())}</h2>`;
+                        continue;
+                    }
+
+                    // Citação >
+                    if (line.trim().startsWith('>')) {
+                        if (inList) { html += `</${listType}>`; inList = false; }
+                        html += `<blockquote>${formatInline(line.trim().slice(1).trim())}</blockquote>`;
+                        continue;
+                    }
+
+                    // Lista não-ordenada - ou *
+                    if (/^\s*[-*]\s+/.test(line)) {
+                        if (!inList || listType !== 'ul') {
+                            if (inList) html += `</${listType}>`;
+                            html += '<ul>';
+                            inList = true;
+                            listType = 'ul';
+                        }
+                        html += `<li>${formatInline(line.replace(/^\s*[-*]\s+/, ''))}</li>`;
+                        continue;
+                    }
+
+                    // Lista ordenada 1. 2. etc
+                    if (/^\s*\d+\.\s+/.test(line)) {
+                        if (!inList || listType !== 'ol') {
+                            if (inList) html += `</${listType}>`;
+                            html += '<ol>';
+                            inList = true;
+                            listType = 'ol';
+                        }
+                        html += `<li>${formatInline(line.replace(/^\s*\d+\.\s+/, ''))}</li>`;
+                        continue;
+                    }
+
+                    // Parágrafo normal
+                    if (inList) { html += `</${listType}>`; inList = false; }
+                    html += `<p>${formatInline(line)}</p>`;
+                }
+
+                if (inList) html += `</${listType}>`;
+                if (inCodeBlock) html += '</code></pre>';
+
+                return html;
+            };
+
+            /**
+             * Formata elementos inline: negrito, itálico, código, links
+             */
+            const formatInline = text => {
+                let s = sanitize(text);
+
+                // Código inline `texto`
+                s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+                // Negrito **texto**
+                s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+                // Itálico *texto*
+                s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+                // Links
+                s = s.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+
+                return s;
+            };
+
+            /**
+             * Tenta detectar o título a partir do conteúdo do .txt
+             * Regra: primeira linha não-vazia que pareça um título
+             */
+            const detectTitle = raw => {
+                const lines = raw.split('\n').filter(l => l.trim());
+                if (!lines.length) return 'Artigo sem título';
+
+                const first = lines[0].trim();
+
+                // Se começa com # → é título
+                if (first.startsWith('# ')) return first.replace(/^#+\s*/, '');
+
+                // Se é MAIÚSCULAS → é título
+                if (first === first.toUpperCase() && first.length > 3) return first;
+
+                // Se é curto (< 80 chars) e não termina com pontuação de frase → provável título
+                if (first.length < 80 && !/[.!?]$/.test(first)) return first;
+
+                return 'Artigo sem título';
+            };
+
+            /**
+             * Calcula tempo de leitura estimado (250 palavras/min)
+             */
+            const readingTime = text => {
+                const words = text.split(/\s+/).filter(w => w.length > 0).length;
+                const minutes = Math.ceil(words / 250);
+                return minutes < 1 ? '< 1 min' : `${minutes} min`;
+            };
+
+            /**
+             * Gera excerpt (resumo) do artigo
+             */
+            const generateExcerpt = (raw, maxLen = 300) => {
+                const lines = raw.split('\n').filter(l => l.trim() && !l.startsWith('#') && l.trim() !== l.trim().toUpperCase());
+                const text = lines.join(' ').replace(/\s+/g, ' ').trim();
+                return text.length > maxLen ? text.slice(0, maxLen) + '…' : text;
+            };
+
+            // -------------------- UPLOAD E PREVIEW --------------------
+
+            $('#upload-article-btn').onclick = () => articleFileInput.click();
+
+            articleFileInput.onchange = e => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                if (!file.name.endsWith('.txt') && file.type !== 'text/plain') {
+                    alert('Por favor, selecione um arquivo .txt');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = evt => {
+                    rawTxtContent = evt.target.result;
+                    const detected = detectTitle(rawTxtContent);
+                    $('#article-title-input').value = detected;
+                    previewContent.innerHTML = `<div class="article-full">${parseTxt(rawTxtContent)}</div>`;
+                    previewArea.classList.remove('hidden');
+
+                    addNotification(`Arquivo "${file.name}" carregado com sucesso! 📄`, 'success');
+                };
+                reader.onerror = () => {
+                    alert('Erro ao ler o arquivo.');
+                };
+                reader.readAsText(file, 'UTF-8');
+                articleFileInput.value = '';
+            };
+
+            // Drag & drop no article preview area
+            const artSection = $('#articles-section');
+            artSection.addEventListener('dragover', e => {
+                e.preventDefault();
+                artSection.style.outline = '2px dashed var(--p)';
+            });
+            artSection.addEventListener('dragleave', () => {
+                artSection.style.outline = 'none';
+            });
+            artSection.addEventListener('drop', e => {
+                e.preventDefault();
+                artSection.style.outline = 'none';
+                const file = e.dataTransfer.files[0];
+                if (file && (file.name.endsWith('.txt') || file.type === 'text/plain')) {
+                    const dt = new DataTransfer();
+                    dt.items.add(file);
+                    articleFileInput.files = dt.files;
+                    articleFileInput.dispatchEvent(new Event('change'));
+                }
+            });
+
+            // -------------------- PUBLICAR ARTIGO --------------------
+
+            $('#article-publish-btn').onclick = () => {
+                if (!rawTxtContent.trim()) {
+                    alert('Nenhum conteúdo para publicar.');
+                    return;
+                }
+
+                const title = $('#article-title-input').value.trim() || detectTitle(rawTxtContent);
+                const tags = $('#article-tags-input').value.split(',').map(t => t.trim()).filter(Boolean);
+                const category = $('#article-category').value;
+
+                const article = {
+                    id: Date.now(),
+                    title,
+                    rawContent: rawTxtContent,
+                    htmlContent: parseTxt(rawTxtContent),
+                    excerpt: generateExcerpt(rawTxtContent),
+                    tags,
+                    category,
+                    author: window.currentAccount ? window.currentAccount.slice(0, 8) : 'anon',
+                    avatar: 'https://i.pravatar.cc/42?img=10',
+                    date: new Date().toLocaleDateString('pt-BR'),
+                    dateISO: new Date().toISOString(),
+                    readTime: readingTime(rawTxtContent),
+                    likes: 0,
+                    comments: 0,
+                    shares: 0,
+                    views: 0,
+                    bookmarked: false
+                };
+
+                articles.unshift(article);
+                saveArticles();
+                renderArticles();
+
+                // Limpar preview
+                rawTxtContent = '';
+                previewArea.classList.add('hidden');
+                previewContent.innerHTML = '';
+                $('#article-title-input').value = '';
+                $('#article-tags-input').value = '';
+
+                addNotification(`Artigo "${title}" publicado com sucesso! 📝`, 'success');
+
+                // Atualizar sitemap dinâmico
+                updateSitemap();
+            };
+
+            $('#article-cancel-btn').onclick = () => {
+                rawTxtContent = '';
+                previewArea.classList.add('hidden');
+                previewContent.innerHTML = '';
+            };
+
+            // -------------------- RENDERIZAR ARTIGOS --------------------
+
+            const renderArticles = () => {
+                let filtered = [...articles];
+
+                // Filtro por busca
+                const searchQ = ($('#article-search')?.value || '').toLowerCase();
+                if (searchQ) {
+                    filtered = filtered.filter(a =>
+                        a.title.toLowerCase().includes(searchQ) ||
+                        a.excerpt.toLowerCase().includes(searchQ) ||
+                        a.tags.some(t => t.toLowerCase().includes(searchQ))
+                    );
+                }
+
+                // Filtro por categoria
+                const catFilter = $('#article-filter-cat')?.value;
+                if (catFilter && catFilter !== 'all') {
+                    filtered = filtered.filter(a => a.category === catFilter);
+                }
+
+                // Ordenação
+                const sort = $('#article-sort')?.value;
+                if (sort === 'oldest') filtered.reverse();
+                if (sort === 'popular') filtered.sort((a, b) => b.likes - a.likes);
+
+                articlesContainer.innerHTML = '';
+
+                if (!filtered.length) {
+                    articlesContainer.innerHTML = `
+                        <div style="text-align:center;padding:2rem;color:var(--m)">
+                            <p style="font-size:2rem;margin-bottom:.5rem">📝</p>
+                            <p>Nenhum artigo encontrado.</p>
+                            <p style="font-size:.78rem;margin-top:.3rem">Publique seu primeiro artigo carregando um arquivo .txt!</p>
+                        </div>`;
+                    return;
+                }
+
+                filtered.forEach(article => {
+                    const card = document.createElement('div');
+                    card.className = 'article-card';
+                    card.dataset.articleId = article.id;
+
+                    const catLabels = {
+                        general:'Geral',tech:'Tecnologia',crypto:'Criptomoedas',
+                        finance:'Finanças',science:'Ciência',health:'Saúde',
+                        education:'Educação',entertainment:'Entretenimento',
+                        gaming:'Games',art:'Arte',opinion:'Opinião',tutorial:'Tutorial'
+                    };
+
+                    card.innerHTML = `
+                        <div class="article-title">${sanitize(article.title)}</div>
+                        <div class="article-meta">
+                            <span>✍️ @${article.author}</span>
+                            <span>📅 ${article.date}</span>
+                            <span>⏱️ ${article.readTime} de leitura</span>
+                            <span>📁 ${catLabels[article.category] || article.category}</span>
+                            <span>👁️ ${article.views} views</span>
+                        </div>
+                        <div class="article-excerpt">${sanitize(article.excerpt)}</div>
+                        <div class="article-tags">
+                            ${article.tags.map(t => `<span class="article-tag">${sanitize(t)}</span>`).join('')}
+                        </div>
+                        <div class="article-actions">
+                            <button data-art-act="like">👍 <span>${article.likes}</span></button>
+                            <button data-art-act="comment">💬 <span>${article.comments}</span></button>
+                            <button data-art-act="share">🔗 Compartilhar</button>
+                            <button data-art-act="bookmark">${article.bookmarked ? '🔖' : '📑'} Salvar</button>
+                            <button data-art-act="download">📥 Baixar .txt</button>
+                            <button data-art-act="read">📖 Ler completo</button>
+                            <button data-art-act="delete" style="color:var(--err)">🗑️ Excluir</button>
+                        </div>`;
+
+                    // Abrir artigo ao clicar no título
+                    card.querySelector('.article-title').onclick = () => openArticle(article);
+
+                    // Ações
+                    card.addEventListener('click', e => {
+                        const btn = e.target.closest('[data-art-act]');
+                        if (!btn) return;
+                        const act = btn.dataset.artAct;
+
+                        switch (act) {
+                            case 'like':
+                                article.likes++;
+                                btn.querySelector('span').textContent = article.likes;
+                                userKarma++;
+                                $('#prof-karma').textContent = userKarma;
+                                saveArticles();
+                                break;
+                            case 'comment':
+                                const comment = prompt('Escreva seu comentário:');
+                                if (comment) {
+                                    article.comments++;
+                                    btn.querySelector('span').textContent = article.comments;
+                                    saveArticles();
+                                }
+                                break;
+                            case 'share':
+                                const url = `${location.href}#article-${article.id}`;
+                                navigator.clipboard.writeText(url);
+                                alert('Link do artigo copiado!');
+                                article.shares++;
+                                saveArticles();
+                                break;
+                            case 'bookmark':
+                                article.bookmarked = !article.bookmarked;
+                                btn.textContent = article.bookmarked ? '🔖 Salvo' : '📑 Salvar';
+                                saveArticles();
+                                addNotification(article.bookmarked ? 'Artigo salvo! 🔖' : 'Artigo removido dos salvos.', 'info');
+                                break;
+                            case 'download':
+                                downloadArticle(article);
+                                break;
+                            case 'read':
+                                openArticle(article);
+                                break;
+                            case 'delete':
+                                if (confirm(`Excluir "${article.title}"?`)) {
+                                    articles = articles.filter(a => a.id !== article.id);
+                                    saveArticles();
+                                    renderArticles();
+                                    addNotification('Artigo excluído.', 'warning');
+                                    updateSitemap();
+                                }
+                                break;
+                        }
+                    });
+
+                    articlesContainer.appendChild(card);
+                });
+            };
+
+            // -------------------- ABRIR ARTIGO COMPLETO --------------------
+
+            const openArticle = article => {
+                article.views++;
+                saveArticles();
+
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-box" style="max-width:700px;max-height:90vh;overflow-y:auto">
+                        <div class="modal-hdr">
+                            <h2 style="font-size:1.1rem">${sanitize(article.title)}</h2>
+                            <button class="modal-close">✖</button>
+                        </div>
+                        <div class="article-meta" style="margin:.5rem 0">
+                            <span>✍️ @${article.author}</span>
+                            <span>📅 ${article.date}</span>
+                            <span>⏱️ ${article.readTime}</span>
+                            <span>👁️ ${article.views} views</span>
+                        </div>
+                        <div class="article-tags" style="margin-bottom:.75rem">
+                            ${article.tags.map(t => `<span class="article-tag">${sanitize(t)}</span>`).join('')}
+                        </div>
+                        <div class="article-full">${article.htmlContent}</div>
+                        <div class="article-stats">
+                            <span>👍 ${article.likes} likes</span>
+                            <span>💬 ${article.comments} comentários</span>
+                            <span>🔗 ${article.shares} compartilhamentos</span>
+                            <span>👁️ ${article.views} visualizações</span>
+                        </div>
+                    </div>`;
+                modal.querySelector('.modal-close').onclick = () => modal.remove();
+                modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+                document.body.appendChild(modal);
+
+                renderArticles(); // atualizar views no card
+            };
+
+            // -------------------- DOWNLOAD ARTIGO COMO .TXT --------------------
+
+            const downloadArticle = article => {
+                const blob = new Blob([article.rawContent], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${article.title.replace(/[^a-zA-Z0-9À-ú ]/g, '').replace(/\s+/g, '_')}.txt`;
+                a.click();
+                URL.revokeObjectURL(url);
+            };
+
+            // -------------------- PERSISTÊNCIA --------------------
+
+            const saveArticles = () => {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+                } catch (e) {
+                    console.warn('localStorage cheio, removendo artigos antigos…');
+                    while (articles.length > 10) articles.pop();
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+                }
+            };
+
+            // -------------------- FILTROS --------------------
+
+            $('#article-search').oninput = renderArticles;
+            $('#article-filter-cat').onchange = renderArticles;
+            $('#article-sort').onchange = renderArticles;
+
+            // -------------------- SITEMAP.XML DINÂMICO --------------------
+
+            const updateSitemap = () => {
+                const baseUrl = 'https://universeos.io';
+                const now = new Date().toISOString().split('T')[0];
+
+                let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+                xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+                // Páginas estáticas
+                const staticPages = [
+                    { loc: '/', priority: '1.0', changefreq: 'daily' },
+                    { loc: '/feed', priority: '0.9', changefreq: 'hourly' },
+                    { loc: '/exchange', priority: '0.9', changefreq: 'hourly' },
+                    { loc: '/marketplace', priority: '0.8', changefreq: 'daily' },
+                    { loc: '/news', priority: '0.8', changefreq: 'hourly' },
+                    { loc: '/search', priority: '0.7', changefreq: 'daily' },
+                    { loc: '/ai', priority: '0.7', changefreq: 'weekly' },
+                    { loc: '/governance', priority: '0.6', changefreq: 'weekly' },
+                    { loc: '/profile', priority: '0.5', changefreq: 'monthly' },
+                    { loc: '/terms', priority: '0.3', changefreq: 'yearly' },
+                    { loc: '/privacy', priority: '0.3', changefreq: 'yearly' },
+                    { loc: '/about', priority: '0.4', changefreq: 'monthly' },
+                    { loc: '/contact', priority: '0.4', changefreq: 'monthly' },
+                    { loc: '/articles', priority: '0.8', changefreq: 'daily' },
+                    { loc: '/shorts', priority: '0.7', changefreq: 'daily' },
+                ];
+
+                staticPages.forEach(p => {
+                    xml += `  <url>\n`;
+                    xml += `    <loc>${baseUrl}${p.loc}</loc>\n`;
+                    xml += `    <lastmod>${now}</lastmod>\n`;
+                    xml += `    <changefreq>${p.changefreq}</changefreq>\n`;
+                    xml += `    <priority>${p.priority}</priority>\n`;
+                    xml += `  </url>\n`;
+                });
+
+                // Artigos dinâmicos
+                articles.forEach(a => {
+                    xml += `  <url>\n`;
+                    xml += `    <loc>${baseUrl}/articles/${a.id}</loc>\n`;
+                    xml += `    <lastmod>${a.dateISO.split('T')[0]}</lastmod>\n`;
+                    xml += `    <changefreq>weekly</changefreq>\n`;
+                    xml += `    <priority>0.7</priority>\n`;
+                    xml += `  </url>\n`;
+                });
+
+                xml += `</urlset>`;
+
+                // Armazenar no localStorage (para download)
+                localStorage.setItem('sitemap_xml', xml);
+                console.log('Sitemap atualizado com', staticPages.length + articles.length, 'URLs');
+            };
+
+            // -------------------- ROBOTS.TXT DINÂMICO --------------------
+
+            const generateRobots = () => {
+                const baseUrl = 'https://universeos.io';
+                const robots = `# UniverseOS Robots.txt
+User-agent: *
+Allow: /
+Allow: /feed
+Allow: /exchange
+Allow: /marketplace
+Allow: /news
+Allow: /articles
+Allow: /shorts
+Allow: /search
+Allow: /about
+Allow: /contact
+Allow: /terms
+Allow: /privacy
+
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemaps
+Sitemap: ${baseUrl}/sitemap.xml
+
+# Crawl-delay (gentil com os bots)
+Crawl-delay: 1
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+`;
+                localStorage.setItem('robots_txt', robots);
+                console.log('Robots.txt gerado');
+            };
+
+            // -------------------- BOTÕES DOWNLOAD SITEMAP/ROBOTS --------------------
+
+            const seoDownloads = document.createElement('div');
+            seoDownloads.style.cssText = 'display:flex;gap:.4rem;margin-top:.5rem';
+            seoDownloads.innerHTML = `
+                <button id="dl-sitemap" class="bs" style="font-size:.7rem">📥 Sitemap.xml</button>
+                <button id="dl-robots" class="bs" style="font-size:.7rem">📥 Robots.txt</button>
+            `;
+            $('#articles-section .section-hdr').appendChild(seoDownloads);
+
+            $('#dl-sitemap').onclick = () => {
+                updateSitemap();
+                const xml = localStorage.getItem('sitemap_xml') || '';
+                const blob = new Blob([xml], { type: 'application/xml' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'sitemap.xml';
+                a.click();
+            };
+
+            $('#dl-robots').onclick = () => {
+                generateRobots();
+                const txt = localStorage.getItem('robots_txt') || '';
+                const blob = new Blob([txt], { type: 'text/plain' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'robots.txt';
+                a.click();
+            };
+
+            // -------------------- INICIALIZAÇÃO --------------------
+
+            updateSitemap();
+            generateRobots();
+            renderArticles();
+
+        })(); // fim do módulo de artigos
+        /* ================================================================
+           STORIES – UPLOAD E VISUALIZAÇÃO COMPLETA
+           ================================================================ */
+        const storiesWrap = document.querySelector('.stories-wrap');
+        const userStories = [];
+
+        // Adicionar botão "Criar Story"
+        const createStoryBtn = document.createElement('div');
+        createStoryBtn.className = 'story';
+        createStoryBtn.style.cursor = 'pointer';
+        createStoryBtn.innerHTML = `
+            <div style="width:100%;height:68px;border-radius:50%;border:2px dashed var(--acc);display:flex;align-items:center;justify-content:center;font-size:1.5rem;background:var(--g1)">+</div>
+            <span>Criar</span>
+        `;
+        storiesWrap.prepend(createStoryBtn);
+
+        createStoryBtn.onclick = () => {
+            const inp = document.createElement('input');
+            inp.type = 'file';
+            inp.accept = 'image/*,video/*';
+            inp.onchange = e => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const url = URL.createObjectURL(file);
+                const isVideo = file.type.startsWith('video');
+
+                userStories.push({
+                    url,
+                    isVideo,
+                    user: window.currentAccount ? window.currentAccount.slice(0, 8) : 'anon',
+                    timestamp: Date.now(),
+                    views: 0
+                });
+
+                const storyEl = document.createElement('div');
+                storyEl.className = 'story';
+                storyEl.innerHTML = `<img src="${isVideo ? 'https://placehold.co/70/111/4f46e5?text=▶' : url}" alt=""/><span>@${window.currentAccount ? window.currentAccount.slice(0, 6) : 'me'}</span>`;
+                storyEl.onclick = () => openStoryViewer(userStories.length - 1);
+                storiesWrap.insertBefore(storyEl, storiesWrap.children[1]);
+
+                addNotification('Sua story foi publicada! 📸', 'success');
+            };
+            inp.click();
+        };
+
+        // Story Viewer (fullscreen modal)
+        const storyViewer = document.createElement('div');
+        storyViewer.id = 'story-viewer';
+        storyViewer.style.cssText = `
+            position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:2500;
+            display:none;align-items:center;justify-content:center;flex-direction:column;
+        `;
+        storyViewer.innerHTML = `
+            <button id="story-close" style="position:absolute;top:1rem;right:1rem;background:transparent;color:#fff;font-size:1.5rem;z-index:10">✖</button>
+            <button id="story-prev" style="position:absolute;left:1rem;top:50%;background:rgba(255,255,255,.2);color:#fff;border-radius:50%;width:40px;height:40px;font-size:1.2rem">‹</button>
+            <button id="story-next" style="position:absolute;right:1rem;top:50%;background:rgba(255,255,255,.2);color:#fff;border-radius:50%;width:40px;height:40px;font-size:1.2rem">›</button>
+            <div id="story-content" style="max-width:90%;max-height:80vh;border-radius:var(--r);overflow:hidden"></div>
+            <div id="story-progress" style="position:absolute;top:.5rem;left:1rem;right:1rem;height:3px;background:rgba(255,255,255,.2);border-radius:2px">
+                <div id="story-progress-bar" style="height:100%;background:var(--p);border-radius:2px;width:0%;transition:width 5s linear"></div>
+            </div>
+            <p id="story-info" style="color:#fff;font-size:.78rem;margin-top:.5rem"></p>
+        `;
+        document.body.appendChild(storyViewer);
+
+        let currentStoryIdx = 0;
+        let storyTimer = null;
+
+        const openStoryViewer = idx => {
+            if (!userStories.length) return;
+            currentStoryIdx = idx;
+            storyViewer.style.display = 'flex';
+            showStory(currentStoryIdx);
+        };
+
+        const showStory = idx => {
+            if (idx < 0 || idx >= userStories.length) { closeStoryViewer(); return; }
+            currentStoryIdx = idx;
+            const s = userStories[idx];
+            s.views++;
+            const content = $('#story-content');
+
+            if (s.isVideo) {
+                content.innerHTML = `<video src="${s.url}" autoplay loop style="max-height:75vh;border-radius:var(--r)"></video>`;
+            } else {
+                content.innerHTML = `<img src="${s.url}" style="max-height:75vh;border-radius:var(--r)"/>`;
+            }
+
+            $('#story-info').textContent = `@${s.user} • ${s.views} views`;
+
+            // Progress bar
+            const bar = $('#story-progress-bar');
+            bar.style.width = '0%';
+            setTimeout(() => bar.style.width = '100%', 50);
+
+            clearTimeout(storyTimer);
+            storyTimer = setTimeout(() => showStory(currentStoryIdx + 1), 5000);
+        };
+
+        const closeStoryViewer = () => {
+            storyViewer.style.display = 'none';
+            clearTimeout(storyTimer);
+            const vid = storyViewer.querySelector('video');
+            if (vid) vid.pause();
+        };
+
+        $('#story-close').onclick = closeStoryViewer;
+        $('#story-prev').onclick = () => showStory(currentStoryIdx - 1);
+        $('#story-next').onclick = () => showStory(currentStoryIdx + 1);
+
+        // Clicar nas stories existentes
+        $$('.story').forEach((s, i) => {
+            if (i === 0) return; // pula o botão "Criar"
+            s.style.cursor = 'pointer';
+            s.onclick = () => {
+                // Adiciona stories demo se necessário
+                if (!userStories.length) {
+                    userStories.push({
+                        url: s.querySelector('img').src,
+                        isVideo: false,
+                        user: s.querySelector('span').textContent,
+                        timestamp: Date.now(),
+                        views: Math.floor(Math.random() * 500)
+                    });
+                }
+                openStoryViewer(0);
+            };
+        });
+
+        /* ================================================================
+           WATCHLIST DE CRIPTOMOEDAS
+           ================================================================ */
+        const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+
+        const watchlistSection = document.createElement('section');
+        watchlistSection.className = 'section-box';
+        watchlistSection.style.marginTop = '.75rem';
+        watchlistSection.innerHTML = `
+            <h3 style="color:var(--acc);font-size:.95rem;margin-bottom:.4rem">⭐ Watchlist</h3>
+            <div id="watchlist-items"></div>
+        `;
+        document.querySelector('.right-panel').prepend(watchlistSection);
+
+        const renderWatchlist = () => {
+            const el = $('#watchlist-items');
+            if (!watchlist.length) {
+                el.innerHTML = '<p style="font-size:.75rem;color:var(--m)">Nenhuma moeda na watchlist. Clique ⭐ na corretora.</p>';
+                return;
+            }
+            el.innerHTML = '';
+            watchlist.forEach(coinId => {
+                const coin = allCoins.find(c => c.id === coinId);
+                if (!coin) return;
+                const ch = coin.price_change_percentage_24h || 0;
+                const d = document.createElement('div');
+                d.className = 'port-item';
+                d.style.cursor = 'pointer';
+                d.innerHTML = `
+                    <div class="port-coin"><img src="${coin.image}" style="width:18px;height:18px;border-radius:50%"/>${coin.symbol.toUpperCase()}</div>
+                    <div class="coin-price" style="font-size:.8rem">$${coin.current_price.toLocaleString()}</div>
+                    <div class="coin-change ${ch >= 0 ? 'up' : 'down'}" style="font-size:.7rem">${ch >= 0 ? '+' : ''}${ch.toFixed(2)}%</div>
+                    <button class="remove-watch" data-id="${coinId}" style="background:transparent;color:var(--err);font-size:.8rem">✖</button>
+                `;
+                d.querySelector('.remove-watch').onclick = e => {
+                    e.stopPropagation();
+                    const idx = watchlist.indexOf(coinId);
+                    if (idx > -1) watchlist.splice(idx, 1);
+                    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+                    renderWatchlist();
+                };
+                el.appendChild(d);
+            });
+        };
+
+        // Adicionar botão ⭐ em cada coin-card
+        const originalRenderCoins = renderCoins;
+        const enhancedRenderCoins = list => {
+            originalRenderCoins(list);
+            $$('.coin-card').forEach(card => {
+                const coinId = card.dataset.coinId;
+                const star = document.createElement('button');
+                star.style.cssText = 'background:transparent;font-size:1rem;margin-left:.3rem';
+                star.textContent = watchlist.includes(coinId) ? '⭐' : '☆';
+                star.onclick = e => {
+                    e.stopPropagation();
+                    if (watchlist.includes(coinId)) {
+                        watchlist.splice(watchlist.indexOf(coinId), 1);
+                        star.textContent = '☆';
+                    } else {
+                        watchlist.push(coinId);
+                        star.textContent = '⭐';
+                        addNotification(`${card.querySelector('.coin-name').textContent} adicionado à watchlist ⭐`, 'info');
+                    }
+                    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+                    renderWatchlist();
+                };
+                card.appendChild(star);
+            });
+        };
+
+        // Substituir renderCoins global
+        window.renderCoinsEnhanced = enhancedRenderCoins;
+
+        renderWatchlist();
+
+        /* ================================================================
+           ALERTAS DE PREÇO
+           ================================================================ */
+        const priceAlerts = JSON.parse(localStorage.getItem('priceAlerts') || '[]');
+
+        const alertSection = document.createElement('section');
+        alertSection.className = 'section-box';
+        alertSection.style.marginTop = '.75rem';
+        alertSection.innerHTML = `
+            <h3 style="color:var(--acc);font-size:.95rem;margin-bottom:.4rem">🚨 Alertas de Preço</h3>
+            <div style="display:flex;gap:.3rem;margin-bottom:.5rem">
+                <select id="alert-coin" style="flex:1;font-size:.78rem"></select>
+                <input type="number" id="alert-price" placeholder="Preço alvo" style="flex:1;font-size:.78rem"/>
+                <select id="alert-dir" style="width:60px;font-size:.78rem">
+                    <option value="above">Acima</option>
+                    <option value="below">Abaixo</option>
+                </select>
+                <button class="bp" id="add-alert" style="font-size:.72rem;white-space:nowrap">+ Alerta</button>
+            </div>
+            <div id="alert-list"></div>
+        `;
+        document.querySelector('.right-panel').appendChild(alertSection);
+
+        const updateAlertCoinSelect = () => {
+            const sel = $('#alert-coin');
+            sel.innerHTML = '';
+            allCoins.slice(0, 30).forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = `${c.symbol.toUpperCase()} - $${c.current_price.toFixed(2)}`;
+                sel.appendChild(opt);
+            });
+        };
+
+        const renderAlerts = () => {
+            const el = $('#alert-list');
+            if (!priceAlerts.length) {
+                el.innerHTML = '<p style="font-size:.72rem;color:var(--m)">Nenhum alerta definido.</p>';
+                return;
+            }
+            el.innerHTML = '';
+            priceAlerts.forEach((a, i) => {
+                const d = document.createElement('div');
+                d.className = 'port-item';
+                d.innerHTML = `
+                    <span style="font-size:.75rem">${a.symbol.toUpperCase()} ${a.direction === 'above' ? '📈' : '📉'} $${a.price}</span>
+                    <button data-idx="${i}" style="background:transparent;color:var(--err);font-size:.75rem">✖</button>
+                `;
+                d.querySelector('button').onclick = () => {
+                    priceAlerts.splice(i, 1);
+                    localStorage.setItem('priceAlerts', JSON.stringify(priceAlerts));
+                    renderAlerts();
+                };
+                el.appendChild(d);
+            });
+        };
+
+        $('#add-alert').onclick = () => {
+            const coinId = $('#alert-coin').value;
+            const price = parseFloat($('#alert-price').value);
+            const dir = $('#alert-dir').value;
+            if (!coinId || !price) { alert('Preencha todos os campos.'); return; }
+            const coin = allCoins.find(c => c.id === coinId);
+            priceAlerts.push({ coinId, symbol: coin.symbol, price, direction: dir, triggered: false });
+            localStorage.setItem('priceAlerts', JSON.stringify(priceAlerts));
+            renderAlerts();
+            addNotification(`Alerta criado: ${coin.symbol.toUpperCase()} ${dir === 'above' ? 'acima' : 'abaixo'} de $${price}`, 'info');
+        };
+
+        // Verificar alertas a cada 30s
+        setInterval(() => {
+            priceAlerts.forEach(a => {
+                if (a.triggered) return;
+                const coin = allCoins.find(c => c.id === a.coinId);
+                if (!coin) return;
+                const triggered = a.direction === 'above'
+                    ? coin.current_price >= a.price
+                    : coin.current_price <= a.price;
+                if (triggered) {
+                    a.triggered = true;
+                    addNotification(`🚨 ALERTA! ${coin.name} atingiu $${coin.current_price.toLocaleString()} (alvo: $${a.price})`, 'warning');
+                    localStorage.setItem('priceAlerts', JSON.stringify(priceAlerts));
+                    renderAlerts();
+                }
+            });
+        }, 30000);
+
+        renderAlerts();
+
+        /* ================================================================
+           CONVERSOR DE MOEDAS
+           ================================================================ */
+        const converterSection = document.createElement('section');
+        converterSection.className = 'section-box';
+        converterSection.style.marginTop = '.75rem';
+        converterSection.innerHTML = `
+            <h3 style="color:var(--acc);font-size:.95rem;margin-bottom:.5rem">💱 Conversor</h3>
+            <div style="display:flex;flex-direction:column;gap:.4rem">
+                <div style="display:flex;gap:.3rem;align-items:center">
+                    <input type="number" id="conv-amount" placeholder="Valor" style="flex:1;font-size:.8rem" value="1"/>
+                    <select id="conv-from" style="flex:1;font-size:.78rem"></select>
+                </div>
+                <div style="text-align:center;font-size:1.2rem">⇅</div>
+                <div style="display:flex;gap:.3rem;align-items:center">
+                    <input type="text" id="conv-result" readonly style="flex:1;font-size:.8rem;font-weight:600;color:var(--p)"/>
+                    <select id="conv-to" style="flex:1;font-size:.78rem"></select>
+                </div>
+            </div>
+        `;
+        document.querySelector('.right-panel').appendChild(converterSection);
+
+        const updateConverterSelects = () => {
+            ['#conv-from', '#conv-to'].forEach(sel => {
+                const el = $(sel);
+                el.innerHTML = '<option value="usd">USD</option>';
+                allCoins.slice(0, 20).forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.textContent = c.symbol.toUpperCase();
+                    el.appendChild(opt);
+                });
+            });
+        };
+
+        const doConversion = () => {
+            const amount = parseFloat($('#conv-amount').value) || 0;
+            const fromId = $('#conv-from').value;
+            const toId = $('#conv-to').value;
+
+            let fromPrice = 1; // USD por padrão
+            let toPrice = 1;
+
+            if (fromId !== 'usd') {
+                const c = allCoins.find(x => x.id === fromId);
+                if (c) fromPrice = c.current_price;
+            }
+            if (toId !== 'usd') {
+                const c = allCoins.find(x => x.id === toId);
+                if (c) toPrice = c.current_price;
+            }
+
+            const usdValue = amount * fromPrice;
+            const result = usdValue / toPrice;
+            $('#conv-result').value = result.toFixed(6);
+        };
+
+        $('#conv-amount').oninput = doConversion;
+        $('#conv-from').onchange = doConversion;
+        $('#conv-to').onchange = doConversion;
+
+        /* ================================================================
+           SISTEMA DE SEGUIDORES
+           ================================================================ */
+        const followers = JSON.parse(localStorage.getItem('followers') || '[]');
+        const following = JSON.parse(localStorage.getItem('following') || '[]');
+
+        // Adicionar contagem no perfil
+        const followerStats = document.createElement('ul');
+        followerStats.style.cssText = 'list-style:none;display:flex;gap:1.5rem;font-size:.82rem;margin-top:.3rem';
+        followerStats.innerHTML = `
+            <li>Seguidores: <strong id="follower-count">${followers.length}</strong></li>
+            <li>Seguindo: <strong id="following-count">${following.length}</strong></li>
+        `;
+        document.querySelector('#profile-view ul').after(followerStats);
+
+        // Botão seguir nos posts
+        const addFollowButtons = () => {
+            $$('.post').forEach(post => {
+                if (post.querySelector('.follow-btn')) return;
+                const username = post.querySelector('.post-un')?.textContent;
+                if (!username) return;
+
+                const btn = document.createElement('button');
+                btn.className = 'follow-btn';
+                btn.style.cssText = 'background:transparent;color:var(--p);font-size:.72rem;font-weight:600;margin-left:auto';
+                const isFollowing = following.includes(username);
+                btn.textContent = isFollowing ? 'Seguindo ✓' : '+ Seguir';
+
+                btn.onclick = () => {
+                    if (following.includes(username)) {
+                        following.splice(following.indexOf(username), 1);
+                        btn.textContent = '+ Seguir';
+                    } else {
+                        following.push(username);
+                        btn.textContent = 'Seguindo ✓';
+                        addNotification(`Você começou a seguir ${username}`, 'success');
+                    }
+                    localStorage.setItem('following', JSON.stringify(following));
+                    $('#following-count').textContent = following.length;
+                };
+
+                post.querySelector('.post-hdr').appendChild(btn);
+            });
+        };
+
+        // Observer para novos posts
+        new MutationObserver(() => addFollowButtons()).observe(feed, { childList: true });
+
+        /* ================================================================
+           PAINEL DE ANALYTICS
+           ================================================================ */
+        const analyticsSection = document.createElement('section');
+        analyticsSection.className = 'section-box';
+        analyticsSection.style.marginTop = '.75rem';
+        analyticsSection.innerHTML = `
+            <h3 style="color:var(--acc);font-size:.95rem;margin-bottom:.5rem">📊 Analytics</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+                <div style="background:var(--g2);border-radius:var(--r);padding:.5rem;text-align:center">
+                    <p style="font-size:.68rem;color:var(--m)">Posts</p>
+                    <p id="stat-posts" style="font-size:1.2rem;font-weight:700;color:var(--p)">0</p>
+                </div>
+                <div style="background:var(--g2);border-radius:var(--r);padding:.5rem;text-align:center">
+                    <p style="font-size:.68rem;color:var(--m)">Likes</p>
+                    <p id="stat-likes" style="font-size:1.2rem;font-weight:700;color:var(--ok)">0</p>
+                </div>
+                <div style="background:var(--g2);border-radius:var(--r);padding:.5rem;text-align:center">
+                    <p style="font-size:.68rem;color:var(--m)">Trades</p>
+                    <p id="stat-trades" style="font-size:1.2rem;font-weight:700;color:var(--acc)">0</p>
+                </div>
+                <div style="background:var(--g2);border-radius:var(--r);padding:.5rem;text-align:center">
+                    <p style="font-size:.68rem;color:var(--m)">Portfólio</p>
+                    <p id="stat-portfolio" style="font-size:1.2rem;font-weight:700;color:var(--p)">$0</p>
+                </div>
+            </div>
+        `;
+        document.querySelector('.right-panel').appendChild(analyticsSection);
+
+        const updateAnalytics = () => {
+            $('#stat-posts').textContent = postId;
+            $('#stat-likes').textContent = userKarma;
+            $('#stat-trades').textContent = tradeHistory.length;
+            const totalPort = Object.keys(portfolio).reduce((sum, k) => {
+                const c = portfolio[k];
+                const coin = allCoins.find(x => x.id === k);
+                return sum + c.qty * (coin ? coin.current_price : c.avgPrice);
+            }, 0);
+            $('#stat-portfolio').textContent = '$' + totalPort.toFixed(2);
+        };
+
+        setInterval(updateAnalytics, 5000);
+
+        /* ================================================================
+           DARK/LIGHT MODE TOGGLE
+           ================================================================ */
+        const themeToggle = document.createElement('button');
+        themeToggle.id = 'theme-toggle';
+        themeToggle.className = 'bs';
+        themeToggle.style.cssText = 'font-size:.9rem;padding:.35rem .5rem';
+        themeToggle.textContent = '☀️';
+        document.querySelector('#navbar').querySelector('div:last-child').prepend(themeToggle);
+
+        let isDark = localStorage.getItem('theme') !== 'light';
+
+        const applyTheme = () => {
+            if (isDark) {
+                document.body.style.background = '#0a0a0a';
+                document.body.style.color = '#e0e0e0';
+                document.documentElement.style.setProperty('--bg', 'rgba(10,10,10,.85)');
+                document.documentElement.style.setProperty('--g1', 'rgba(20,20,20,.45)');
+                document.documentElement.style.setProperty('--g2', 'rgba(30,30,30,.65)');
+                document.documentElement.style.setProperty('--t', '#e0e0e0');
+                themeToggle.textContent = '☀️';
+            } else {
+                document.body.style.background = '#f5f5f5';
+                document.body.style.color = '#1a1a1a';
+                document.documentElement.style.setProperty('--bg', 'rgba(255,255,255,.9)');
+                document.documentElement.style.setProperty('--g1', 'rgba(240,240,240,.7)');
+                document.documentElement.style.setProperty('--g2', 'rgba(230,230,230,.8)');
+                document.documentElement.style.setProperty('--t', '#1a1a1a');
+                themeToggle.textContent = '🌙';
+            }
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        };
+
+        themeToggle.onclick = () => { isDark = !isDark; applyTheme(); };
+        applyTheme();
+
+        /* ================================================================
+           ATUALIZAR SELECTS QUANDO COINS CARREGAREM
+           ================================================================ */
+        const originalFetchCoins = fetchCoins;
+        const enhancedFetchCoins = async () => {
+            await originalFetchCoins();
+            updateAlertCoinSelect();
+            updateConverterSelects();
+            doConversion();
+            renderWatchlist();
+            if (window.renderCoinsEnhanced && allCoins.length) {
+                window.renderCoinsEnhanced(allCoins);
+            }
+        };
+
+        // Override fetch na inicialização da exchange
+        const origShowTab = showTab;
+        const enhancedShowTab = t => {
+            origShowTab(t);
+            if (t === 'exchange' && allCoins.length) {
+                updateAlertCoinSelect();
+                updateConverterSelects();
+                if (window.renderCoinsEnhanced) window.renderCoinsEnhanced(allCoins);
+            }
+        };
+
+        // Reatachar a nav com showTab melhorado
+        $$('[data-tab]').forEach(a => {
+            a.removeEventListener('click', a._handler);
+            a._handler = e => { e.preventDefault(); enhancedShowTab(a.dataset.tab); };
+            a.addEventListener('click', a._handler);
+        });
+
+        /* ================================================================
+           KEYBOARD SHORTCUTS
+           ================================================================ */
+        document.addEventListener('keydown', e => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+            switch (e.key) {
+                case '1': enhancedShowTab('feed'); break;
+                case '2': enhancedShowTab('shorts'); break;
+                case '3': enhancedShowTab('messages'); break;
+                case '4': enhancedShowTab('news'); break;
+                case '5': enhancedShowTab('exchange'); break;
+                case '6': enhancedShowTab('search'); break;
+                case '7': enhancedShowTab('ai'); break;
+                case 'n': notifBell.click(); break;
+                case 'Escape':
+                    notifPanel.style.display = 'none';
+                    closeStoryViewer();
+                    break;
+            }
+        });
+
+        /* ================================================================
+           SERVICE WORKER (OFFLINE CACHE)
+           ================================================================ */
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE = 'universeos-v1';
+                const ASSETS = ['/'];
+                self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS))));
+                self.addEventListener('fetch', e => {
+                    e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).then(resp => {
+                        const clone = resp.clone();
+                        caches.open(CACHE).then(c => c.put(e.request, clone));
+                        return resp;
+                    }).catch(() => caches.match('/'))));
+                });
+            `;
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(console.error);
+        }
+
+        /* ================================================================
+           PWA MANIFEST (dinâmico)
+           ================================================================ */
+        const manifest = {
+            name: 'UniverseOS',
+            short_name: 'UniverseOS',
+            description: 'Rede Social Web3 & Corretora Cripto',
+            start_url: '/',
+            display: 'standalone',
+            background_color: '#0a0a0a',
+            theme_color: '#4f46e5',
+            icons: [
+                { src: 'https://placehold.co/192/4f46e5/fff?text=UOS', sizes: '192x192', type: 'image/png' },
+                { src: 'https://placehold.co/512/4f46e5/fff?text=UOS', sizes: '512x512', type: 'image/png' }
+            ]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = URL.createObjectURL(manifestBlob);
+        document.head.appendChild(manifestLink);
+
+        /* ================================================================
+           INICIALIZAÇÃO FINAL
+           ================================================================ */
+        addNotification('Bem-vindo ao UniverseOS! 🌌 Explore o feed, conecte sua wallet e comece a investir.', 'info');
+        updateAnalytics();
+
+    </script>
+    <script>
+
+        /* ================================================================
+           PARSER GLOBAL DE .TXT (acessível por todos os módulos)
+           ================================================================ */
+        window.parseTxtGlobal = raw => {
+            const lines = raw.split('\n');
+            let html = '';
+            let inCodeBlock = false;
+            let inList = false;
+            let listType = '';
+
+            const formatInline = text => {
+                let s = sanitize(text);
+                s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+                s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+                s = s.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+                return s;
+            };
+
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i];
+
+                if (line.trim().startsWith('```')) {
+                    if (inCodeBlock) {
+                        html += '</code></pre>';
+                        inCodeBlock = false;
+                    } else {
+                        if (inList) { html += `</${listType}>`; inList = false; }
+                        html += '<pre><code>';
+                        inCodeBlock = true;
+                    }
+                    continue;
+                }
+                if (inCodeBlock) {
+                    html += sanitize(line) + '\n';
+                    continue;
+                }
+
+                if (!line.trim()) {
+                    if (inList) { html += `</${listType}>`; inList = false; }
+                    continue;
+                }
+
+                if (/^[-_]{3,}$/.test(line.trim())) {
+                    if (inList) { html += `</${listType}>`; inList = false; }
+                    html += '<hr/>';
+                    continue;
+                }
+
+                if (line.startsWith('### ')) {
+                    if (inList) { html += `</${listType}>`; inList = false; }
+                    html += `<h3>${formatInline(line.slice(4))}</h3>`;
+                    continue;
+                }
+                if (line.startsWith('## ')) {
+                    if (inList) { html += `</${listType}>`; inList = false; }
+                    html += `<h2>${formatInline(line.slice(3))}</h2>`;
+                    continue;
+                }
+                if (line.startsWith('# ')) {
+                    if (inList) { html += `</${listType}>`; inList = false; }
+                    html += `<h1>${formatInline(line.slice(2))}</h1>`;
+                    continue;
+                }
+
+                if (line.trim().length > 3 && line.trim() === line.trim().toUpperCase() && /[A-ZÀ-Ú]/.test(line)) {
+                    if (inList) { html += `</${listType}>`; inList = false; }
+                    html += `<h2>${formatInline(line.trim())}</h2>`;
+                    continue;
+                }
+
+                if (line.trim().startsWith('>')) {
+                    if (inList) { html += `</${listType}>`; inList = false; }
+                    html += `<blockquote>${formatInline(line.trim().slice(1).trim())}</blockquote>`;
+                    continue;
+                }
+
+                if (/^\s*[-*]\s+/.test(line)) {
+                    if (!inList || listType !== 'ul') {
+                        if (inList) html += `</${listType}>`;
+                        html += '<ul>';
+                        inList = true;
+                        listType = 'ul';
+                    }
+                    html += `<li>${formatInline(line.replace(/^\s*[-*]\s+/, ''))}</li>`;
+                    continue;
+                }
+
+                if (/^\s*\d+\.\s+/.test(line)) {
+                    if (!inList || listType !== 'ol') {
+                        if (inList) html += `</${listType}>`;
+                        html += '<ol>';
+                        inList = true;
+                        listType = 'ol';
+                    }
+                    html += `<li>${formatInline(line.replace(/^\s*\d+\.\s+/, ''))}</li>`;
+                    continue;
+                }
+
+                if (inList) { html += `</${listType}>`; inList = false; }
+                html += `<p>${formatInline(line)}</p>`;
+            }
+
+            if (inList) html += `</${listType}>`;
+            if (inCodeBlock) html += '</code></pre>';
+
+            return html;
+        };
+
+        /* ================================================================
+           CARREGADOR DE ARTIGOS PRÉ-POPULADOS (CORRIGIDO)
+           ================================================================ */
+        (() => {
+            const PRE_POPULATED_ARTICLES = [
+
+                {
+                    title: 'O Futuro das Criptomoedas em 2026',
+                    category: 'crypto',
+                    tags: ['bitcoin', 'ethereum', 'cripto', 'investimento'],
+                    content: `# O Futuro das Criptomoedas em 2026
+
+A revolução blockchain continua transformando o mundo financeiro. Neste artigo, exploraremos as principais tendências que moldarão o mercado de criptomoedas em 2026.
+
+## Bitcoin e o Halving
+
+O halving do Bitcoin em 2024 trouxe consequências significativas para todo o ecossistema:
+
+- Redução da recompensa de mineração para 3.125 BTC por bloco
+- Aumento da escassez digital e pressão deflacionária
+- Adoção institucional crescente via ETFs aprovados pela SEC
+- Novos recordes de preço impulsionados pela demanda global
+
+> "Bitcoin é o ouro digital do século 21" - Michael Saylor
+
+## Ethereum e a Revolução Web3
+
+A rede Ethereum continua sendo a espinha dorsal da Web3, sustentando:
+
+1. Mais de 4.000 contratos inteligentes ativos
+2. DeFi com TVL superior a 100 bilhões de dólares
+3. NFTs e tokens ERC-721 em constante evolução
+4. DAOs governando bilhões em tesourarias comunitárias
+5. Layer 2 solutions como Arbitrum e Optimism
+
+### Solidity e o Desenvolvimento Web3
+
+Para desenvolver na Ethereum, Solidity continua sendo a linguagem principal. Com frameworks como Hardhat e Foundry, o ecossistema nunca foi tão produtivo.
+
+## Tendências para Ficar de Olho
+
+**Inteligência Artificial + Blockchain** está criando novas possibilidades:
+
+- Agentes autônomos que operam on-chain
+- Oráculos de IA para dados mais precisos
+- Modelos de ML descentralizados via redes como Bittensor
+
+**Real World Assets (RWA)** estão trazendo ativos tradicionais para a blockchain:
+
+- Tokenização de imóveis e títulos
+- Stablecoins lastreadas em ativos reais
+- Fundos tokenizados por gestoras tradicionais
+
+## Conclusão
+
+O mercado de criptomoedas está mais maduro, regulamentado e integrado à economia global do que nunca. **Faça sua própria pesquisa** e *invista com responsabilidade*.
+
+---
+
+Fontes: https://coingecko.com | https://ethereum.org | https://bitcoin.org`
+                },
+
+                {
+                    title: 'Guia Completo de DeFi para Iniciantes',
+                    category: 'finance',
+                    tags: ['defi', 'finanças', 'tutorial', 'blockchain'],
+                    content: `# Guia Completo de DeFi para Iniciantes
+
+Finanças Descentralizadas (DeFi) representam uma das inovações mais importantes da última década. Este guia vai te levar do zero ao conhecimento prático.
+
+## O que é DeFi?
+
+DeFi é um ecossistema de aplicações financeiras construídas sobre blockchains públicas, principalmente Ethereum. Diferente do sistema financeiro tradicional, DeFi é:
+
+- **Sem permissão** – qualquer pessoa pode participar
+- **Transparente** – todo código é aberto e auditável
+- **Sem intermediários** – contratos inteligentes substituem bancos
+- **Composável** – protocolos se integram como peças de LEGO
+
+## Principais Categorias
+
+### 1. Exchanges Descentralizadas (DEX)
+
+Plataformas como Uniswap e SushiSwap permitem trocar tokens sem intermediários:
+
+- Automated Market Makers (AMM) definem preços automaticamente
+- Liquidity pools substituem order books tradicionais
+- Qualquer pessoa pode se tornar um market maker
+
+### 2. Lending e Borrowing
+
+Protocolos como Aave e Compound permitem:
+
+1. Emprestar seus ativos e ganhar juros
+2. Tomar empréstimos usando cripto como colateral
+3. Flash loans instantâneos sem colateral
+4. Taxas dinâmicas baseadas em oferta e demanda
+
+### 3. Yield Farming
+
+Estratégia de maximizar retornos movendo fundos entre protocolos:
+
+- Fornecer liquidez em DEXs
+- Staking em protocolos de governança
+- Farming de tokens de recompensa
+- Auto-compounding via agregadores como Yearn
+
+## Riscos do DeFi
+
+> Importante: DeFi não é livre de riscos!
+
+- **Smart Contract Risk** – bugs no código podem causar perdas
+- **Impermanent Loss** – risco ao fornecer liquidez
+- **Rug Pulls** – projetos fraudulentos que roubam fundos
+- **Regulação** – incerteza regulatória em muitos países
+
+## Como Começar
+
+1. Instale a MetaMask no seu navegador
+2. Compre ETH em uma exchange centralizada
+3. Transfira para sua wallet MetaMask
+4. Acesse Uniswap ou Aave e explore
+5. Comece com valores pequenos para aprender
+
+---
+
+*Este artigo é educacional e NÃO constitui aconselhamento financeiro.*`
+                },
+
+                {
+                    title: 'NFTs: Arte, Tecnologia e o Futuro da Propriedade Digital',
+                    category: 'art',
+                    tags: ['nft', 'arte', 'blockchain', 'digital'],
+                    content: `# NFTs: Arte, Tecnologia e o Futuro da Propriedade Digital
+
+Os Tokens Não-Fungíveis revolucionaram o conceito de propriedade digital. Vamos explorar o que são, como funcionam e para onde estão indo.
+
+## O que são NFTs?
+
+NFTs são ativos digitais únicos registrados em blockchain que comprovam autenticidade e propriedade:
+
+- **Não-fungíveis** – cada NFT é único
+- **Imutáveis** – uma vez criados, não podem ser alterados
+- **Verificáveis** – qualquer pessoa pode verificar autenticidade
+- **Interoperáveis** – funcionam em múltiplas plataformas
+
+## Casos de Uso
+
+### Arte Digital
+
+1. Artistas vendendo diretamente para colecionadores
+2. Royalties automáticos em revendas
+3. Proveniência digital imutável
+4. Novas formas de expressão interativa
+
+### Gaming
+
+- Skins, armas e personagens como NFTs
+- Economia de jogo com valor real
+- Interoperabilidade entre jogos
+- Play-to-earn e move-to-earn
+
+### Música
+
+- Álbuns e singles como NFTs limitados
+- Royalties distribuídos via smart contracts
+- Acesso exclusivo a comunidades de fãs
+
+## O Futuro dos NFTs
+
+O mercado está evoluindo de especulação para **utilidade real**:
+
+- **Phygital** – NFTs conectados a produtos físicos
+- **Dynamic NFTs** – que mudam com o tempo ou eventos
+- **Soulbound Tokens** – NFTs intransferíveis de identidade
+- **AI-Generated Art** – arte criada por inteligência artificial
+
+> "NFTs são a prova de que a criatividade pode ser tokenizada"
+
+---
+
+*Explore o marketplace NFT do UniverseOS para descobrir e colecionar arte digital.*`
+                },
+
+                {
+                    title: 'Web3: A Internet Descentralizada do Futuro',
+                    category: 'tech',
+                    tags: ['web3', 'blockchain', 'descentralização', 'internet'],
+                    content: `# Web3: A Internet Descentralizada do Futuro
+
+A Web3 representa a próxima evolução da internet, onde os usuários são donos dos seus dados e do valor que criam.
+
+## A Evolução da Web
+
+### Web1 (1990-2004) – Somente Leitura
+- Páginas estáticas HTML
+- Portais de informação
+- Nenhuma interação do usuário
+
+### Web2 (2004-2020) – Leitura e Escrita
+- Redes sociais e blogs
+- Conteúdo gerado pelo usuário
+- Plataformas centralizadas controlam os dados
+
+### Web3 (2020+) – Leitura, Escrita e Propriedade
+- Descentralização via blockchain
+- Usuários possuem seus dados
+- Economia tokenizada e governança comunitária
+
+## Pilares da Web3
+
+1. **Blockchain** – infraestrutura descentralizada
+2. **Smart Contracts** – lógica automatizada e transparente
+3. **Tokens** – representação digital de valor
+4. **DAOs** – organizações autônomas descentralizadas
+5. **dApps** – aplicações sem servidor central
+
+## Por que Web3 Importa
+
+**Privacidade**: Seus dados não pertencem a corporações
+
+**Transparência**: Todo código é aberto e auditável
+
+**Inclusão**: Acesso global sem barreiras geográficas
+
+**Propriedade**: Você é dono do que cria e compartilha
+
+## Desafios da Web3
+
+- Escalabilidade ainda é um problema
+- Experiência do usuário precisa melhorar
+- Regulamentação está em construção
+- Sustentabilidade energética
+
+## Como Participar
+
+- Use uma wallet como MetaMask
+- Explore dApps em diferentes blockchains
+- Participe de DAOs e vote em propostas
+- Contribua com código open source
+
+> O UniverseOS é um exemplo vivo de Web3 em ação.
+
+---
+
+*O futuro é descentralizado. O futuro é agora.*`
+                },
+
+                {
+                    title: 'Análise Técnica de Criptomoedas: Guia Prático',
+                    category: 'crypto',
+                    tags: ['análise técnica', 'trading', 'rsi', 'indicadores'],
+                    content: `# Análise Técnica de Criptomoedas: Guia Prático
+
+Aprenda os principais indicadores técnicos para tomar decisões mais informadas no mercado cripto.
+
+## O que é Análise Técnica?
+
+É o estudo de gráficos e indicadores estatísticos para prever movimentos futuros de preço baseado em padrões históricos.
+
+## Indicadores Essenciais
+
+### RSI (Relative Strength Index)
+
+O RSI mede a velocidade e magnitude das mudanças de preço:
+
+- **Acima de 70**: Sobrecomprado (possível correção)
+- **Abaixo de 30**: Sobrevendido (possível recuperação)
+- **Em torno de 50**: Neutro
+
+### Médias Móveis (SMA/EMA)
+
+- **SMA 7**: tendência de curto prazo
+- **SMA 25**: tendência de médio prazo
+- **SMA 200**: tendência de longo prazo
+- **Golden Cross**: SMA curta cruza acima da longa (alta)
+- **Death Cross**: SMA curta cruza abaixo da longa (baixa)
+
+### Suporte e Resistência
+
+- **Suporte**: nível onde o preço tende a parar de cair
+- **Resistência**: nível onde o preço tende a parar de subir
+- Rompimento indica movimentos fortes
+
+### Volume
+
+- Volume crescente confirma tendências
+- Volume decrescente sugere reversão
+- Divergência entre preço e volume é sinal de alerta
+
+## Padrões de Candlestick
+
+1. **Doji** – indecisão no mercado
+2. **Hammer** – possível reversão para alta
+3. **Shooting Star** – possível reversão para baixa
+4. **Engulfing** – forte sinal de reversão
+
+## Dicas Práticas
+
+- Nunca use apenas um indicador isolado
+- Combine análise técnica com fundamentalista
+- Defina stop-loss antes de entrar em posição
+- Não opere por emoção, siga seu plano
+- Pratique em paper trading primeiro
+
+> Use a IA do UniverseOS para análise técnica automática!
+
+---
+
+*Análise técnica é uma ferramenta, não uma garantia. DYOR.*`
+                },
+
+                // ─────────────────────────────────────────────
+                // ARTIGOS VAZIOS – COLE SEU .txt AQUI
+                // Para adicionar um artigo:
+                // 1. Remova /* e */ ao redor do bloco
+                // 2. Preencha title, category, tags e content
+                // 3. Cole o conteúdo do .txt dentro de content: ``
+                // ─────────────────────────────────────────────
+
+                /*
+                {
+                    title: '',
+                    category: '',
+                    tags: [],
+                    content: ``
+                },
+                */
+
+                /*
+                {
+                    title: '',
+                    category: '',
+                    tags: [],
+                    content: ``
+                },
+                */
+
+                /*
+                {
+                    title: '',
+                    category: '',
+                    tags: [],
+                    content: ``
+                },
+                */
+
+                /*
+                {
+                    title: '',
+                    category: '',
+                    tags: [],
+                    content: ``
+                },
+                */
+
+                /*
+                {
+                    title: '',
+                    category: '',
+                    tags: [],
+                    content: ``
+                },
+                */
+
+            ];
+
+            // ─────────────────────────────────────────────
+            // CARREGADOR AUTOMÁTICO
+            // ─────────────────────────────────────────────
+
+            const STORAGE_KEY = 'universe_articles';
+            const LOADED_KEY = 'articles_preloaded_v3';
+
+            // Forçar recarregamento (remova esta linha após confirmar que funciona)
+            // localStorage.removeItem(LOADED_KEY);
+
+            const loadArticles = () => {
+                const validArticles = PRE_POPULATED_ARTICLES.filter(a => a.title && a.content);
+
+                if (!validArticles.length) {
+                    console.log('⚠️ Nenhum artigo pré-populado para carregar.');
+                    return;
+                }
+
+                if (localStorage.getItem(LOADED_KEY) === 'true') {
+                    console.log('✅ Artigos já foram carregados anteriormente.');
+                    return;
+                }
+
+                const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+                let loaded = 0;
+
+                validArticles.forEach((articleDef, idx) => {
+                    // Verificar duplicata pelo título
+                    const alreadyExists = existing.some(a =>
+                        a.title.toLowerCase().trim() === articleDef.title.toLowerCase().trim()
+                    );
+                    if (alreadyExists) return;
+
+                    // Parser
+                    const htmlContent = window.parseTxtGlobal(articleDef.content);
+
+                    // Calcular tempo de leitura
+                    const words = articleDef.content.split(/\s+/).filter(w => w.length > 0).length;
+                    const readTime = Math.max(1, Math.ceil(words / 250));
+
+                    // Gerar excerpt
+                    const textLines = articleDef.content.split('\n').filter(l =>
+                        l.trim() &&
+                        !l.startsWith('#') &&
+                        !l.startsWith('>') &&
+                        !l.startsWith('-') &&
+                        !l.startsWith('*') &&
+                        !/^\d+\./.test(l.trim()) &&
+                        l.trim() !== l.trim().toUpperCase()
+                    );
+                    const excerpt = textLines.join(' ').replace(/\s+/g, ' ').trim().slice(0, 300) + '…';
+
+                    const article = {
+                        id: Date.now() + idx + Math.floor(Math.random() * 10000),
+                        title: articleDef.title,
+                        rawContent: articleDef.content,
+                        htmlContent: htmlContent,
+                        excerpt: excerpt,
+                        tags: articleDef.tags || [],
+                        category: articleDef.category || 'general',
+                        author: 'UniverseOS',
+                        avatar: 'https://placehold.co/42/4f46e5/fff?text=UOS',
+                        date: new Date().toLocaleDateString('pt-BR'),
+                        dateISO: new Date().toISOString(),
+                        readTime: `${readTime} min`,
+                        likes: Math.floor(Math.random() * 50) + 10,
+                        comments: Math.floor(Math.random() * 15),
+                        shares: Math.floor(Math.random() * 20),
+                        views: Math.floor(Math.random() * 200) + 50,
+                        bookmarked: false
+                    };
+
+                    existing.unshift(article);
+                    loaded++;
+                });
+
+                if (loaded > 0) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+                    localStorage.setItem(LOADED_KEY, 'true');
+                    console.log(`📝 ${loaded} artigos pré-populados carregados com sucesso!`);
+
+                    // Re-renderizar se a função existir
+                    if (typeof renderArticles === 'function') {
+                        // Atualizar a variável articles no escopo do módulo de artigos
+                        try {
+                            renderArticles();
+                        } catch (e) {
+                            console.log('Re-render será feito ao abrir a aba Artigos');
+                        }
+                    }
+
+                    // Notificação
+                    if (typeof addNotification === 'function') {
+                        addNotification(`📝 ${loaded} artigos publicados automaticamente!`, 'success');
+                    }
+                } else {
+                    localStorage.setItem(LOADED_KEY, 'true');
+                    console.log('✅ Todos os artigos já existiam.');
+                }
+            };
+
+            // Executar carregamento
+            loadArticles();
+
+            // ─────────────────────────────────────────────
+            // BOTÃO PARA FORÇAR RECARGA (para debug)
+            // ─────────────────────────────────────────────
+            const reloadBtn = document.createElement('button');
+            reloadBtn.className = 'bs';
+            reloadBtn.style.cssText = 'font-size:.65rem;padding:.25rem .4rem;position:fixed;bottom:7rem;left:.5rem;z-index:600';
+            reloadBtn.textContent = '🔄 Reload Articles';
+            reloadBtn.onclick = () => {
+                localStorage.removeItem(LOADED_KEY);
+                localStorage.removeItem(STORAGE_KEY);
+                loadArticles();
+                alert('Artigos recarregados! Atualize a página.');
+                location.reload();
+            };
+            document.body.appendChild(reloadBtn);
+
+        })();
+</script>
+</body>
+</html>

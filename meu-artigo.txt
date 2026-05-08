@@ -1,0 +1,26 @@
+# O Futuro das Criptomoedas em 2026
+
+A revolução blockchain continua transformando o mundo financeiro. Neste artigo, vamos explorar as principais tendências para 2026.
+
+## Bitcoin e o Halving
+
+O halving do Bitcoin em 2024 trouxe consequências significativas:
+
+- Redução da recompensa de mineração para 3.125 BTC
+- Aumento da escassez digital
+- Pressão deflacionária no longo prazo
+
+> "Bitcoin é ouro digital" - Michael Saylor
+
+## Ethereum e a Web3
+
+A rede Ethereum continua sendo a base para:
+
+1. Contratos inteligentes
+2. DeFi (Finanças Descentralizadas)
+3. NFTs e tokens ERC-721
+4. DAOs e governança on-chain
+
+### Solidity e Desenvolvimento
+
+Para desenvolver na Ethereum, use `Solidity` como linguagem principal:
